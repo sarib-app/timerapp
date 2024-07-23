@@ -3,7 +3,8 @@
     "name": "battleground",
     "slug": "battleground",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "landscape",
+    "platforms": ["ios", "android","web"],
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
