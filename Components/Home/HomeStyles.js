@@ -35,31 +35,53 @@ const WindowWidth = Dimensions.get('screen').width
       },
       boxTitle:{
         color:Colors.FontColorI,
-        fontWeight:'bold'
+        fontSize:"14px",
+        fontWeight:'bold',
+        marginHorizontal:3,
+        textAlign:"center"
       },
       
       boxSubTitle:{
         color:Colors.FontColorI,
+        marginHorizontal:3,
+
+        fontSize:"14px",
+        textAlign:"center",
         fontWeight:'400'
       },
       MainTitle:{
-        fontSize:68,
+        fontSize:"70px",
         fontWeight:'bold',
         color:Colors.FontColorI,
-        margin:20
+      },
+      TitleWrapper:{
+width:WindowWidth/1.09,
+justifyContent:'space-between',
+alignItems:'center',
+marginVertical:20,
+flexDirection:'row'
+
       },
       TimeBig:{
-        fontSize:280,
+        fontSize:"280px",
         fontWeight:'bold',
         color:Colors.FontColorI,
         // margin:20,
         fontFamily:'impact'
       },
       TimeWrapper:{
-        width:WindowWidth/5,
+        width:WindowWidth/2.8,
         justifyContent:'space-between',
         flexDirection:'row',
-        alignItems:'center'
+        alignItems:'center',
+        // backgroundColor:"yellow"
+      },
+      BottomWrapper:{
+        width:WindowWidth/1.09,
+
+        alignItems:'flex-end',
+
+        display:'flex'
       }
 
 

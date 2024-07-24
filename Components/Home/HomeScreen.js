@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import HomeStyles from './HomeStyles';
 import Colors from '../../Global/Branding/colors';
-import { EvilIcons, Ionicons } from '@expo/vector-icons';
+import { EvilIcons, Fontisto, Ionicons } from '@expo/vector-icons';
+import { SwipeButton } from 'react-native-expo-swipe-button';
+import Slider from '../../Global/components/Slider';
+
 
 export default function HomeScreen() {
 
@@ -114,16 +117,49 @@ horizontal
 showsHorizontalScrollIndicator={false}
 />
     </View>
-
+<View style={HomeStyles.TitleWrapper}>
+<Ionicons name="menu" size={54} color={"transparent"} />
     <Text style={HomeStyles.MainTitle}>HEAT 1</Text>
-    <Text style={HomeStyles.TimeBig}>23:00</Text>
+    <Ionicons name="menu" size={48} color={Colors.FontColorI} />
+</View>
+    <Text style={HomeStyles.TimeBig}>23 : 00</Text>
 <View style={HomeStyles.TimeWrapper}>
 <Ionicons name="play-back-outline" size={84} color={Colors.FontColorI} />
 <EvilIcons name="play" size={84} color={Colors.FontColorI} />
 <EvilIcons name="play" size={84} color={Colors.FontColorI} />
 
 <Ionicons name="play-forward-outline" size={84} color={Colors.FontColorI} />
+
 </View>
+<View style={HomeStyles.BottomWrapper}>
+
+<View style={{width:46,height:46,justifyContent:'center',alignItems:'center',backgroundColor:Colors.FontColorI,borderRadius:2000}}>
+
+{/* <Fontisto name="unlocked" size={30} color={Colors.Dark} style={{}} /> */}
+<Slider/>
+{/* <SwipeButton
+          Icon={
+            <MaterialIcons name="keyboard-arrow-right" size={50} color="white" />
+          }
+          width={320}
+          height={55}
+          onComplete={() => handleBookNow()}
+          title="Swipe to complete"
+          borderRadius={1000}
+          circleBackgroundColor={theme3.secondaryColor}
+          underlayContainerGradientProps={{
+            colors: [theme3.primaryColor,theme3.secondaryColor],
+            start: [0, 0.5],
+            end: [1.3, 0.5],
+          }}
+          titleStyle={{color:"white"}}
+                containerStyle={{ backgroundColor: 'gray' }}
+          underlayTitle="Release to complete"
+          underlayTitleStyle={{ color: theme3.light }}
+        /> */}
+</View>
+</View>
+
     </View>
   );
 }

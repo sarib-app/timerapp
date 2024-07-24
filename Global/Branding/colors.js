@@ -4,7 +4,7 @@ const Colors = {
     SeconderyColor:"#EBF0FD",
     placeHolder:"rgba(0,0,0,0.3)",
     inActive:"rgba(255,255,255,0.5)",
-        FontColorI:"white",
+        FontColorI:"#D9D9D9",
     FontColorII:"rgba(0,0,0,0.7)",
     
 
