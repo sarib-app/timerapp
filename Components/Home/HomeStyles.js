@@ -13,8 +13,10 @@ const WindowWidth = Dimensions.get('screen').width
         height:WindowHeight,
         backgroundColor:Colors.Dark,
         flexDirection: 'column',
-        alignItems:'center'
-      },
+        justifyContent:"space-between",
+        alignItems:'center',
+      paddingBottom:40,
+          },
       Header:{
         width:WindowWidth,
         alignItems:'center',
@@ -26,8 +28,9 @@ const WindowWidth = Dimensions.get('screen').width
       },
       HeadertItem:{
         width:WindowWidth/10.5,
-        height:WindowHeight/8,
-        borderRadius:20,
+        // height:WindowHeight/8,
+        paddingVertical:5,
+        borderRadius:10,
         backgroundColor:Colors.BgColorII,
         margin:1.5,
         justifyContent:'center',
@@ -35,7 +38,7 @@ const WindowWidth = Dimensions.get('screen').width
       },
       boxTitle:{
         color:Colors.FontColorI,
-        fontSize:"14px",
+        fontSize:WindowHeight/50,
         fontWeight:'bold',
         marginHorizontal:3,
         textAlign:"center"
@@ -45,12 +48,12 @@ const WindowWidth = Dimensions.get('screen').width
         color:Colors.FontColorI,
         marginHorizontal:3,
 
-        fontSize:"14px",
+        fontSize:WindowHeight/50,
         textAlign:"center",
         fontWeight:'400'
       },
       MainTitle:{
-        fontSize:"70px",
+        fontSize:WindowHeight/10,
         fontWeight:'bold',
         color:Colors.FontColorI,
       },
@@ -58,12 +61,19 @@ const WindowWidth = Dimensions.get('screen').width
 width:WindowWidth/1.09,
 justifyContent:'space-between',
 alignItems:'center',
-marginVertical:20,
+marginTop:0,
 flexDirection:'row'
 
       },
       TimeBig:{
-        fontSize:"280px",
+        fontSize:WindowHeight/3,
+        fontWeight:'bold',
+        color:Colors.FontColorI,
+        // margin:20,
+        fontFamily:'impact'
+      },
+      Time_small:{
+        fontSize:WindowHeight/4,
         fontWeight:'bold',
         color:Colors.FontColorI,
         // margin:20,
@@ -82,8 +92,20 @@ flexDirection:'row'
         alignItems:'flex-end',
 
         display:'flex'
+      },
+      control_two:{
+        width:WindowWidth,
+        justifyContent:'center',
+        flexDirection:'row',
+        alignItems:'center'
+      },
+      Image_wrapper:{
+        width:WindowWidth/2.2,
+        height:WindowHeight/2.1,
+        alignItems:'center',
+        justifyContent:'center',
+        // backgroundColor:"pink"
       }
-
 
 
   })

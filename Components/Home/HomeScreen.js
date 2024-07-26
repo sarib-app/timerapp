@@ -3,12 +3,16 @@ import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native
 import HomeStyles from './HomeStyles';
 import Colors from '../../Global/Branding/colors';
 import { EvilIcons, Fontisto, Ionicons } from '@expo/vector-icons';
-import { SwipeButton } from 'react-native-expo-swipe-button';
 import Slider from '../../Global/components/Slider';
+import Controls_layout1 from './Controls_Layout1';
+import Controls_layout2 from './Controls_Layout2';
+import { WindowHeight } from '../../Global/components/Dimensions';
 
 
 export default function HomeScreen() {
-
+const [locked,setlocked]=useState(true)
+const [temp_play,setTempPlay]=useState(false)
+const [showVid,setShowVid]=useState(false)
 
     const data = [
         {
@@ -117,26 +121,38 @@ horizontal
 showsHorizontalScrollIndicator={false}
 />
     </View>
+    <View style={{alignItems:'center'}}>
 <View style={HomeStyles.TitleWrapper}>
-<Ionicons name="menu" size={54} color={"transparent"} />
+<Ionicons name="menu" size={WindowHeight/12} color={"transparent"} />
+{
+  !showVid &&
     <Text style={HomeStyles.MainTitle}>HEAT 1</Text>
-    <Ionicons name="menu" size={48} color={Colors.FontColorI} />
+}
+   
+    <Ionicons
+    onPress={()=>setShowVid((p)=> !p)}
+    name="menu" size={WindowHeight/12} color={locked ? "transparent":Colors.FontColorI} />
 </View>
-    <Text style={HomeStyles.TimeBig}>23 : 00</Text>
-<View style={HomeStyles.TimeWrapper}>
-<Ionicons name="play-back-outline" size={84} color={Colors.FontColorI} />
-<EvilIcons name="play" size={84} color={Colors.FontColorI} />
-<EvilIcons name="play" size={84} color={Colors.FontColorI} />
-
-<Ionicons name="play-forward-outline" size={84} color={Colors.FontColorI} />
+{
+  !showVid ? 
+  <Controls_layout1 
+  locked={locked}
+  /> 
+:
+  <Controls_layout2/>
+}
 
 </View>
+
 <View style={HomeStyles.BottomWrapper}>
 
-<View style={{width:46,height:46,justifyContent:'center',alignItems:'center',backgroundColor:Colors.FontColorI,borderRadius:2000}}>
+<TouchableOpacity 
+onPress={()=> setlocked((p)=>!p)}
+style={{padding:10,justifyContent:'center',alignItems:'center',backgroundColor:Colors.FontColorI,borderRadius:2000}}>
 
-{/* <Fontisto name="unlocked" size={30} color={Colors.Dark} style={{}} /> */}
-<Slider/>
+<Fontisto name={locked ? "locked":"unlocked"} size={WindowHeight/22} color={Colors.Dark} style={{}} />
+
+{/* <Slider/> */}
 {/* <SwipeButton
           Icon={
             <MaterialIcons name="keyboard-arrow-right" size={50} color="white" />
@@ -157,7 +173,7 @@ showsHorizontalScrollIndicator={false}
           underlayTitle="Release to complete"
           underlayTitleStyle={{ color: theme3.light }}
         /> */}
-</View>
+</TouchableOpacity>
 </View>
 
     </View>
