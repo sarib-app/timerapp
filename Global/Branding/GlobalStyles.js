@@ -31,15 +31,18 @@ alignItems:'center'
 },
 
 SmallBtn:{
- 
-  padding:20,
-  backgroundColor:Colors.PrimaryColor,
-  alignItems:'center',
-  justifyContent:'center',
-  paddingTop:10,
-  paddingBottom:10,
-  margin:10,
-  borderRadius:10
+ borderRadius:20,
+ padding:WindowHeight/30,
+ paddingVertical:WindowHeight/80,
+ backgroundColor:Colors.BgColorII,
+flexDirection:'row',
+alignItems:'center'
+
+  
+},
+SmallBtnText:{
+color:Colors.FontColorI,
+fontSize:WindowHeight/28,
 },
 HistoryCard:{
 padding:20,

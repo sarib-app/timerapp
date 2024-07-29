@@ -7,9 +7,11 @@ import Slider from '../../Global/components/Slider';
 import Controls_layout1 from './Controls_Layout1';
 import Controls_layout2 from './Controls_Layout2';
 import { WindowHeight } from '../../Global/components/Dimensions';
+import { useNavigation } from '@react-navigation/native';
 
 
 export default function HomeScreen() {
+  const navigation = useNavigation()
 const [locked,setlocked]=useState(true)
 const [temp_play,setTempPlay]=useState(false)
 const [showVid,setShowVid]=useState(false)
@@ -130,7 +132,9 @@ showsHorizontalScrollIndicator={false}
 }
    
     <Ionicons
-    onPress={()=>setShowVid((p)=> !p)}
+    // onPress={()=>setShowVid((p)=> !p)}
+    onPress={()=> navigation.navigate("Datalist")}
+
     name="menu" size={WindowHeight/12} color={locked ? "transparent":Colors.FontColorI} />
 </View>
 {
