@@ -42,7 +42,7 @@ alignItems:'center'
 },
 SmallBtnText:{
 color:Colors.FontColorI,
-fontSize:WindowHeight/28,
+fontSize:WindowHeight/33,
 },
 HistoryCard:{
 padding:20,

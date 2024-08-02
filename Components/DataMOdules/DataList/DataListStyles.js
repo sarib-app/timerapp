@@ -18,8 +18,8 @@ const WindowWidth = Dimensions.get('screen').width
       paddingBottom:40,
           },
           TitleWrapper:{
-            width:WindowWidth/1.09,
-            justifyContent:'space-evenly',
+            width:WindowWidth/1.12,
+            justifyContent:'space-between',
             alignItems:'center',
             marginTop:0,
             flexDirection:'row'
@@ -27,23 +27,28 @@ const WindowWidth = Dimensions.get('screen').width
                   },
 
           MainTitle:{
-            fontSize:WindowHeight/12,
+            fontSize:WindowHeight/18,
             fontWeight:'bold',
             color:Colors.FontColorI,
           },
-          SessionWrapper:{
+          SessionWrapper:{  
             width:WindowWidth/1.09,
-            padding:WindowHeight/15,
+            padding:WindowHeight/34,
             backgroundColor:Colors.BgColorII,
-            borderRadius:WindowHeight/22,
+            borderRadius:WindowHeight/40,
             justifyContent:"space-between",
             alignItems:'center',
             flexDirection:'row',margin:5
           },
           Sessiontxt:{
-            fontSize:WindowHeight/17,
+            fontSize:WindowHeight/25,
             fontWeight:'bold',
             color:Colors.FontColorI,
+          },
+          CustomSoundTst:{
+            fontSize:WindowHeight/30,
+            fontWeight:'bold',
+            color:"#487FD2",
           },
           IconWrapper:{
             borderRadius:1000,
@@ -51,8 +56,8 @@ const WindowWidth = Dimensions.get('screen').width
             justifyContent:'center',
             alignItems:'center',
             backgroundColor:Colors.danger,
-            width:WindowHeight/12,
-            height:WindowHeight/12
+            width:WindowHeight/15,
+            height:WindowHeight/15
           }
 
 

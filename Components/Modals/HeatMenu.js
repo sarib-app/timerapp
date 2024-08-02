@@ -1,41 +1,45 @@
 import react from "react";
 import { Modal,View,Text,TouchableOpacity } from "react-native";
 import { WindowHeight, WindowWidth } from "../../Global/components/Dimensions";
-// import { Color, Padding } from "../GlobalStyles";
+// import { Color, Padding } from "../GlobalStyles";?
 import Colors from "../../Global/Branding/colors";
 import HeatStyles from "./HeatMenuStyles";
+import { useNavigation } from "@react-navigation/native";
 function AddSessionMenu(){
-
+const naivgation = useNavigation()
     return(
-        <Modal
-        transparent={true}
-        animationType="fade"
-        visible={true}
-        >
+        // <Modal
+        // transparent={true}
+        // animationType="fade"
+        // visible={true}
+        // >
 
         <View style={HeatStyles.container}>
-        <View style={[HeatStyles.TextStyles,{paddingTop:0}]}>
+              <TouchableOpacity 
+              onPress={()=> naivgation.navigate("HeatList")}
+              style={[HeatStyles.TextWrapper,{paddingTop:0}]}>
+   
         
         <Text style={HeatStyles.TextStyles}>
           Heat
         </Text>
-        </View>
         
-        <View style={HeatStyles.TextWrapper}>
+        </TouchableOpacity>
+        <TouchableOpacity style={HeatStyles.TextWrapper}>
         
         <Text style={HeatStyles.TextStyles}>
         Transition
         </Text>
-        </View>
+        </TouchableOpacity>
         
-        <View style={HeatStyles.TextWrapper}>
+        <TouchableOpacity style={HeatStyles.TextWrapper}>
         
         <Text style={HeatStyles.TextStyles}>
           Lane Assignments
         </Text>
+        </TouchableOpacity>
         </View>
-        </View>
-        </Modal>
+        // </Modal>
     )
 }
 

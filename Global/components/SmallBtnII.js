@@ -14,14 +14,14 @@ export default function SmallbtnII({OnPress,hide}) {
 if(hide)
     return(
     
-<View 
+<TouchableOpacity 
 onPress={()=> OnPress()}
 style={[GlobalStyles.SmallBtn, {opacity:0}]}>
 <MaterialIcons name="star-purple500" size={WindowHeight/24} color={Colors.FontColorI} />
 <Text style={GlobalStyles.SmallBtnText}>
 Add New
 </Text>
-</View>
+</TouchableOpacity>
 )
 else
   return (

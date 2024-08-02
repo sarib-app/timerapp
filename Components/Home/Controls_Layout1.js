@@ -7,7 +7,7 @@ import { WindowHeight } from '../../Global/components/Dimensions';
 
 
 
-export default function Controls_layout1({locked}) {
+export default function Controls_layout1({locked,onPress}) {
 
   return (
     
@@ -23,7 +23,9 @@ export default function Controls_layout1({locked}) {
  name="play" size={WindowHeight/9} color={Colors.FontColorI} />
 <EvilIcons name="play" size={WindowHeight/9} color={Colors.FontColorI} />
 
-<Ionicons name="play-forward-outline" size={WindowHeight/9} color={Colors.FontColorI} />
+<Ionicons
+onPress={() =>  onPress()}
+name="play-forward-outline" size={WindowHeight/9} color={Colors.FontColorI} />
 
 </View>
 }

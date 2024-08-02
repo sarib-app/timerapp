@@ -6,8 +6,9 @@ import { EvilIcons, Fontisto, Ionicons } from '@expo/vector-icons';
 import Slider from '../../Global/components/Slider';
 import Controls_layout1 from './Controls_Layout1';
 import Controls_layout2 from './Controls_Layout2';
-import { WindowHeight } from '../../Global/components/Dimensions';
+import { WindowHeight, WindowWidth } from '../../Global/components/Dimensions';
 import { useNavigation } from '@react-navigation/native';
+import { SwipeButton } from 'react-native-expo-swipe-button';
 
 
 export default function HomeScreen() {
@@ -135,49 +136,63 @@ showsHorizontalScrollIndicator={false}
     // onPress={()=>setShowVid((p)=> !p)}
     onPress={()=> navigation.navigate("Datalist")}
 
-    name="menu" size={WindowHeight/12} color={locked ? "transparent":Colors.FontColorI} />
+    name="menu" size={WindowHeight/12} color={Colors.FontColorI} />
 </View>
 {
   !showVid ? 
   <Controls_layout1 
-  locked={locked}
+  locked={false}
+  onPress={()=> setShowVid(true)}
+
   /> 
 :
-  <Controls_layout2/>
+  <Controls_layout2
+  />
 }
 
 </View>
 
 <View style={HomeStyles.BottomWrapper}>
+  {
+    locked ?
+    <View>
 
-<TouchableOpacity 
-onPress={()=> setlocked((p)=>!p)}
-style={{padding:10,justifyContent:'center',alignItems:'center',backgroundColor:Colors.FontColorI,borderRadius:2000}}>
+    <SwipeButton
+              Icon={
+              <Fontisto name={locked ? "locked":"unlocked"} size={WindowHeight/22} color={Colors.Dark} style={{}} />
+              }
+              width={WindowWidth/4.5}
+              height={WindowHeight/10}
+              onComplete={() => setlocked(false)}
+              title="Swipe to complete"
+              
+              borderRadius={1000}
+              circleBackgroundColor={Colors.FontColorI}
+              circleSize={WindowHeight/8}
+              underlayContainerGradientProps={{
+                colors: [Colors.BgColorII,Colors.BgColorII],
+                start: [0, 0.5],
+                end: [1.3, 0.5],
+              }}
+              titleStyle={{color:"white",fontSize:10}}
+                    containerStyle={{ backgroundColor: Colors.BgColorII }}
+              underlayTitle="Release to complete"
+              underlayTitleStyle={Colors.BgColorII }
+            />
+      </View>:
+      <TouchableOpacity 
+      onPress={()=> setlocked(true)}
+      style={{padding:10,justifyContent:'center',alignItems:'center',backgroundColor:Colors.FontColorI,borderRadius:2000}}>
+      
+      <Fontisto name={locked ? "locked":"unlocked"} size={WindowHeight/22} color={Colors.Dark} style={{}} />
+      
+      
+      
+      </TouchableOpacity>
+  }
+ 
 
-<Fontisto name={locked ? "locked":"unlocked"} size={WindowHeight/22} color={Colors.Dark} style={{}} />
 
-{/* <Slider/> */}
-{/* <SwipeButton
-          Icon={
-            <MaterialIcons name="keyboard-arrow-right" size={50} color="white" />
-          }
-          width={320}
-          height={55}
-          onComplete={() => handleBookNow()}
-          title="Swipe to complete"
-          borderRadius={1000}
-          circleBackgroundColor={theme3.secondaryColor}
-          underlayContainerGradientProps={{
-            colors: [theme3.primaryColor,theme3.secondaryColor],
-            start: [0, 0.5],
-            end: [1.3, 0.5],
-          }}
-          titleStyle={{color:"white"}}
-                containerStyle={{ backgroundColor: 'gray' }}
-          underlayTitle="Release to complete"
-          underlayTitleStyle={{ color: theme3.light }}
-        /> */}
-</TouchableOpacity>
 </View>
 
     </View>

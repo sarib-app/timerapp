@@ -3660,6 +3660,11 @@ expo-keep-awake@~13.0.2:
   resolved "https://registry.npmjs.org/expo-keep-awake/-/expo-keep-awake-13.0.2.tgz"
   integrity sha512-kKiwkVg/bY0AJ5q1Pxnm/GvpeB6hbNJhcFsoOWDh2NlpibhCLaHL826KHUM+WsnJRbVRxJ+K9vbPRHEMvFpVyw==
 
+expo-linear-gradient@*:
+  version "13.0.2"
+  resolved "https://registry.npmjs.org/expo-linear-gradient/-/expo-linear-gradient-13.0.2.tgz"
+  integrity sha512-EDcILUjRKu4P1rtWcwciN6CSyGtH7Bq4ll3oTRV7h3h8oSzSilH1g6z7kTAMlacPBKvMnkkWOGzW6KtgMKEiTg==
+
 expo-manifests@~0.14.0:
   version "0.14.3"
   resolved "https://registry.npmjs.org/expo-manifests/-/expo-manifests-0.14.3.tgz"
@@ -6169,6 +6174,11 @@ react-is@^18.0.0:
   version "18.3.1"
   resolved "https://registry.npmjs.org/react-is/-/react-is-18.3.1.tgz"
   integrity sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==
+
+react-native-expo-swipe-button@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.npmjs.org/react-native-expo-swipe-button/-/react-native-expo-swipe-button-1.0.2.tgz"
+  integrity sha512-aqSdomcBH1W1bHYhq/lPzpeQPs3TuLuKFbTwsG/Ov69hEjHdo5dMoXL2d3yvNYifcLj2Bs4GdpXKPRiIkoDIfg==
 
 "react-native-gesture-handler@>= 1.0.0", react-native-gesture-handler@~2.14.0:
   version "2.14.1"

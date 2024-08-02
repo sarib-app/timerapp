@@ -91,7 +91,7 @@ flexDirection:'row'
 
         alignItems:'flex-end',
 
-        display:'flex'
+        // display:'flex'
       },
       control_two:{
         width:WindowWidth,

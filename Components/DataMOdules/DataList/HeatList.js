@@ -3,14 +3,15 @@ import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native
 
 import DataListStyle from './DataListStyles';
 import GlobalStyles from '../../../Global/Branding/GlobalStyles';
-import { Fontisto, MaterialIcons, Octicons } from '@expo/vector-icons';
+import { AntDesign, Fontisto, MaterialIcons, Octicons } from '@expo/vector-icons';
 import { WindowHeight, WindowWidth } from '../../../Global/components/Dimensions';
 import Colors from '../../../Global/Branding/colors';
 import SmallbtnII from '../../../Global/components/SmallBtnII';
 import AddSessionMenu from '../../Modals/HeatMenu';
+import AddHeatSegments from '../../Modals/AddHeatSegments';
 
 
-export default function Datalist() {
+export default function HeatList() {
 const [showMenu,setShowMenu]= useState(false)
 
 const data = [
@@ -35,9 +36,9 @@ style={[DataListStyle.IconWrapper,{backgroundColor:clr}]}
 >
   {
     icon == "pencil" ? 
-<Octicons name={icon} size={WindowHeight/27} color={Colors.FontColorI}/>
+<Octicons name={icon} size={WindowHeight/20} color={Colors.FontColorI}/>
 :
-<Fontisto  name={icon}  size={WindowHeight/27} color={Colors.FontColorI} />
+<Fontisto  name={icon}  size={WindowHeight/20} color={Colors.FontColorI} />
 
   }
 </TouchableOpacity>
@@ -47,12 +48,20 @@ function RenderItem({item}){
   return(
     <View style={DataListStyle.SessionWrapper}>
 <Text style={DataListStyle.Sessiontxt}>
-  Heat 1
+  Time Segment 1
 </Text>
 <Text style={DataListStyle.Sessiontxt}>
   1:00
 </Text>
-<View style={GlobalStyles.RowMaker}>
+<Text style={DataListStyle.Sessiontxt}>
+  down
+</Text>
+
+<AntDesign name="checksquareo" size={WindowHeight/18} color={Colors.FontColorI}/>
+<Text style={DataListStyle.CustomSoundTst}>
+  2 Custom Sound {">"}
+</Text>
+{/* <View style={GlobalStyles.RowMaker}>
 <Btn
 clr={Colors.danger}
 icon={"pencil"}
@@ -72,7 +81,7 @@ icon={"minus-a"}
 clr={Colors.bgIv}
 icon={"rocket"}
 />
-</View>
+</View> */}
     </View>
   )
 }
@@ -92,7 +101,7 @@ OnPress={()=>console.log("dsds")}
 hide={true}
 />
 <Text style={DataListStyle.MainTitle}>
-    HEAT & TRANSITIONS
+    ADD HEAT
 </Text>
 
 <SmallbtnII 
@@ -109,7 +118,7 @@ renderItem={({item})=>{
 />
 {
   showMenu && 
-<AddSessionMenu 
+<AddHeatSegments 
 />
 }
 
