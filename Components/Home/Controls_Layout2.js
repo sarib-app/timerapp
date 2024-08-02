@@ -10,7 +10,7 @@ const videoSource =
   'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
 
 
-export default function Controls_layout2({}) {
+export default function Controls_layout2({onPress}) {
 
     const ref = useRef(null);
     const [isPlaying, setIsPlaying] = useState(true);
