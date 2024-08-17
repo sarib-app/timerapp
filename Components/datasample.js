@@ -1,10 +1,11 @@
-const data = [
+const dataSAmple = [
     {
         id:1, //should be increased with +1 according to the last record
         type:"heat",
         heat_series: 1 ,//should automatically caluclate according to last added record where type === heat,
         total_duration: 1, // sum of total duration in time_segments array (//in seconds)
         launched:false, //by default false
+       
         time_segments:[
             {
                  id:1,
@@ -19,6 +20,12 @@ const data = [
                     }// }
                  ]
                 }
-        ]
+        ],
+        lanes:[
+            {athlete_name:"",
+            gym_name:""}
+           ],
+
     }
 ]
+export {dataSAmple}

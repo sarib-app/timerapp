@@ -1,127 +1,122 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import DataListStyle from './DataListStyles';
 import GlobalStyles from '../../../Global/Branding/GlobalStyles';
-import { AntDesign, Fontisto, MaterialIcons, Octicons } from '@expo/vector-icons';
-import { WindowHeight, WindowWidth } from '../../../Global/components/Dimensions';
+import { Entypo, Fontisto } from '@expo/vector-icons';
+import { WindowHeight } from '../../../Global/components/Dimensions';
 import Colors from '../../../Global/Branding/colors';
 import SmallbtnII from '../../../Global/components/SmallBtnII';
-import AddSessionMenu from '../../Modals/HeatMenu';
 import AddHeatSegments from '../../Modals/AddHeatSegments';
+import { dataSAmple } from '../../datasample';
 
+export default function HeatList({ route, navigation }) {
+  const [showMenu, setShowMenu] = useState(false);
+  const [duration, setDuration] = useState("");
+  const [pod, setPod] = useState(false);
+  const [countDown, setCountDown] = useState("down");
+  const [heatSeries, setHeatSeries] = useState(route.params?.heat_series || 1);
+  const [timeSegments, setTimeSegments] = useState([]);
 
-export default function HeatList() {
-const [showMenu,setShowMenu]= useState(false)
+  useEffect(() => {
+    if (heatSeries) {
+      // Fetch time segments for the specific heat_series
+      const heat = dataSAmple.find(heat => heat.id === heatSeries);
+      if (heat) {
+        setTimeSegments(heat.time_segments);
+      }
+    }
+  }, [heatSeries]);
 
-const data = [
-  {
-    id:1,
-    title:"Heat 1",
-    time:"1:00"
-  },
-  {
-    id:2,
-    title:"Heat 1",
-    time:"1:00"
-  },
-  
-]
-
-
-function Btn({clr,icon}){
-  return(
-    <TouchableOpacity
-style={[DataListStyle.IconWrapper,{backgroundColor:clr}]}
->
-  {
-    icon == "pencil" ? 
-<Octicons name={icon} size={WindowHeight/20} color={Colors.FontColorI}/>
-:
-<Fontisto  name={icon}  size={WindowHeight/20} color={Colors.FontColorI} />
-
+  function RenderItem({ item }) {
+    function RenderSoundOptions({ item }) {
+      return (
+        <View style={DataListStyle.SessionWrapper_Inner}>
+          <Text style={DataListStyle.Sessiontxt_inner}>Custom Sound Option</Text>
+          <Text style={DataListStyle.Sessiontxt_inner}>CUE AT {item.cue_at}</Text>
+          <Text style={[DataListStyle.Sessiontxt_inner, { color: "transparent" }]}>N/A</Text>
+          <View style={{ flexDirection: 'row' }}>
+            <Entypo name="upload" size={WindowHeight / 24} color={Colors.lightTxt} />
+            <Fontisto name="record" size={WindowHeight / 24} style={{ marginLeft: 10 }} color={Colors.danger} />
+          </View>
+        </View>
+      );
+    }
+    return (
+      <View style={DataListStyle.SessionWrapper_parent}>
+        <View style={DataListStyle.Segment_Wrapper}>
+          <Text style={DataListStyle.Sessiontxt}>Time Segment {item.id}</Text>
+          <Text style={DataListStyle.Sessiontxt}>{item.duration}</Text>
+          <Text style={DataListStyle.Sessiontxt}>{item.play_sequence}</Text>
+          <Text style={DataListStyle.Sessiontxt}>{item.preload === false ? "NO" : "YES"}</Text>
+        </View>
+        <FlatList
+          data={item.sounds}
+          renderItem={({ item }) => <RenderSoundOptions item={item} />}
+        />
+      </View>
+    );
   }
-</TouchableOpacity>
-  )
-}
-function RenderItem({item}){
-  return(
-    <View style={DataListStyle.SessionWrapper}>
-<Text style={DataListStyle.Sessiontxt}>
-  Time Segment 1
-</Text>
-<Text style={DataListStyle.Sessiontxt}>
-  1:00
-</Text>
-<Text style={DataListStyle.Sessiontxt}>
-  down
-</Text>
 
-<AntDesign name="checksquareo" size={WindowHeight/18} color={Colors.FontColorI}/>
-<Text style={DataListStyle.CustomSoundTst}>
-  2 Custom Sound {">"}
-</Text>
-{/* <View style={GlobalStyles.RowMaker}>
-<Btn
-clr={Colors.danger}
-icon={"pencil"}
-/>
-<View
-style={{marginHorizontal:5}}
->
+  function SegmentHeader() {
+    return (
+      <View style={DataListStyle.SessionWrapper_Headings}>
+        <Text style={DataListStyle.Session_heading_txt}>Title</Text>
+        <Text style={DataListStyle.Session_heading_txt}>Duration</Text>
+        <Text style={DataListStyle.Session_heading_txt}>Count</Text>
+        <Text style={DataListStyle.Session_heading_txt}>PSO</Text>
+      </View>
+    );
+  }
 
-<Btn
-clr={Colors.send}
-icon={"minus-a"}
-/>
+  function onOpenMenu() {
+    setShowMenu(true);
+  }
 
-</View>
-
-<Btn
-clr={Colors.bgIv}
-icon={"rocket"}
-/>
-</View> */}
-    </View>
-  )
-}
-function onOpenMENU(){
-  setShowMenu((p)=> !p)
-}
+  function onSaveSegment(newSegment) {
+    setShowMenu(false);
+    if (heatSeries) {
+      // Add the new segment to the existing heat
+      const updatedHeat = dataSAmple.find(heat => heat.id === heatSeries);
+      if (updatedHeat) {
+        updatedHeat.time_segments.push(newSegment);
+        setTimeSegments([...updatedHeat.time_segments]);
+      }
+    } else {
+      // Create a new heat and add the segment
+      const newHeatSeries = `heat_${Date.now()}`; // Generate a unique ID for the new heat
+      const newHeat = {
+        id: newHeatSeries,
+        time_segments: [newSegment],
+      };
+      dataSAmple.push(newHeat);
+      setHeatSeries(newHeatSeries);
+      setTimeSegments([newSegment]);
+    }
+  }
 
   return (
     <View style={DataListStyle.container}>
-   <View
-   style={DataListStyle.TitleWrapper}
-   >
-    
-    <SmallbtnII 
-OnPress={()=>console.log("dsds")}
+      <View style={DataListStyle.TitleWrapper}>
+        <SmallbtnII OnPress={() => console.log("Add New Heat")} hide={true} />
+        <Text style={DataListStyle.MainTitle}>ADD HEAT</Text>
+        <SmallbtnII OnPress={onOpenMenu} />
+      </View>
 
-hide={true}
-/>
-<Text style={DataListStyle.MainTitle}>
-    ADD HEAT
-</Text>
+      <SegmentHeader />
+      <FlatList
+        data={timeSegments}
+        renderItem={({ item }) => <RenderItem item={item} />}
+      />
 
-<SmallbtnII 
-OnPress={onOpenMENU}
-/>
-</View>
-<FlatList 
-data={data}
-renderItem={({item})=>{
-  return(
-    <RenderItem item={item}/>
-  )
-}}
-/>
-{
-  showMenu && 
-<AddHeatSegments 
-/>
-}
-
+      {showMenu && (
+        <AddHeatSegments
+          setDuration={setDuration}
+          POD={setPod}
+          setCountOption={setCountDown}
+          onPress={(e)=>onSaveSegment(e)}
+        />
+      )}
     </View>
   );
 }
