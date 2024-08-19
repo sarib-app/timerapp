@@ -1,5 +1,5 @@
 import react, { useState } from "react";
-import { Modal,View,Text,TouchableOpacity } from "react-native";
+import { Modal,View,Text,TouchableOpacity, Alert } from "react-native";
 import { WindowHeight, WindowWidth } from "../../Global/components/Dimensions";
 // import { Color, Padding } from "../GlobalStyles";?
 import Colors from "../../Global/Branding/colors";
@@ -8,21 +8,34 @@ import { useNavigation } from "@react-navigation/native";
 import { Switch } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import GlobalStyles from "../../Global/Branding/GlobalStyles";
+import { TextInput } from "react-native-gesture-handler";
+import { convertSecondsToTime } from "../../Global/Calls/ConvertToSEconds";
 function AddHeatSegments({onPress}){
 const naivgation = useNavigation()
 const [isEnabled, setIsEnabled] = useState  
 (false);
   const toggleSwitch = () =>{
     setIsEnabled(previousState => !previousState);}
+      // const [duration,setDUration]=useState(60)
+      const [duration,setDuration] = useState(60)
+      const [Count_opt,setCount_opt] = useState("down")
 
+      
+      // const duration = 20
     function sendData(){
-      const segment = {
-        duration: 60, // duration in seconds
-        play_sequence: 'down',
-        preload: false, // true or false
-        sounds: [] 
+      if(duration){
+        const segment = {
+          duration: Number(duration), // duration in seconds
+          play_sequence: 'down',
+          preload: isEnabled, // true or false
+          sounds: [] 
+        }
+        onPress(segment)
       }
-      onPress(segment)
+      else{
+        Alert.alert("Fill Info","Please add duration to proceed.")
+      }
+  
     }
     return(
         // <Modal
@@ -35,19 +48,27 @@ const [isEnabled, setIsEnabled] = useState
            <Text style={HeatStyles.TextStyles_heat}>
           Add Team Segments
         </Text>
-              <TouchableOpacity 
+              <View 
               // onPress={()=> naivgation.navigate("HeatList")}
               style={[HeatStyles.TextWrapper_heat]}>
    
-        
+     
         <Text style={HeatStyles.TextStyles_heat}>
           Duration
         </Text>
+        <TextInput
+        value={duration.toString()}
+        onChangeText={(e)=> setDuration(e)}
+        placeholder="Type"
+        keyboardType="numeric"
+
+        style={HeatStyles.TextStyles_heat}
+        />
         <Text style={HeatStyles.TextStyles_heat}>
-          1:00
+          {convertSecondsToTime(Number(duration))}
         </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={HeatStyles.TextWrapper_heat}>
+        </View>
+        <View style={HeatStyles.TextWrapper_heat}>
         
         <Text style={HeatStyles.TextStyles_heat}>
         Preloaded Sound Option
@@ -60,26 +81,42 @@ const [isEnabled, setIsEnabled] = useState
         
         value={isEnabled}
       />
-        </TouchableOpacity>
+        </View>
         
-        <TouchableOpacity style={HeatStyles.TextWrapper_heat}>
+        <View style={HeatStyles.TextWrapper_heat}>
         
         <Text style={HeatStyles.TextStyles_heat}>
           Count Options
         </Text>
-        <View style={GlobalStyles.RowMaker}>
+        <TouchableOpacity 
+        onPress={()=> setCount_opt("down")}
+        
+        style={GlobalStyles.RowMaker}>
         <Text style={HeatStyles.TextStyles_heat}>
           Down
         </Text>
-        <AntDesign name="checkcircleo" size={WindowHeight/30} style={{marginLeft:5}}color={Colors.FontColorI} />
-        </View>
-        <View style={GlobalStyles.RowMaker}>
+      
+
+        <AntDesign name={Count_opt === "down"?"checkcircle": "checkcircleo"} size={WindowHeight/30} style={{marginLeft:5}}color={Colors.FontColorI} />
+      
+
+        </TouchableOpacity>
+        <TouchableOpacity 
+      
+        onPress={()=> setCount_opt("up")}
+        
+
+        style={GlobalStyles.RowMaker}>
         <Text style={HeatStyles.TextStyles_heat}>
           Up
         </Text>
-        <AntDesign name="checkcircleo" size={WindowHeight/30} style={{marginLeft:5}}color={Colors.FontColorI} />
-        </View>
+      
+        <AntDesign name={Count_opt === "down"?"checkcircleo": "checkcircle"} size={WindowHeight/30} style={{marginLeft:5}}color={Colors.FontColorI} />
         </TouchableOpacity>
+  
+
+
+        </View>
         <Text
         onPress={()=> sendData()}
         style={[HeatStyles.TextStyles_heat,{marginTop:WindowHeight/35}]}>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import DataListStyle from './DataListStyles';
 import GlobalStyles from '../../../Global/Branding/GlobalStyles';
@@ -12,15 +12,18 @@ import AddHeatSegments from '../../Modals/AddHeatSegments';
 import { dataSAmple } from '../../datasample';
 import saveHeatData from '../../../Global/Calls/SaveHeat';
 import fetchHeatData from '../../../Global/Calls/getHeats';
-
-export default function HeatList() {
+import RoundBtn from '../../../Global/Branding/RoundBtn';
+import { useNavigation } from '@react-navigation/native';
+import { TextInput } from 'react-native-gesture-handler';
+import addSoundToTimeSegment from '../../../Global/Calls/SaveSounds';
+import launchHeat from '../../../Global/Calls/ChangeLaunch';
+export default function HeatList({route}) {
+  const { heatSeries } = route.params;
+  const navigation = useNavigation()
 const [showMenu,setShowMenu]= useState(false)
-const [duration,setDuration] = useState("")
 const [heatData,setHeatData] = useState([])
-const segmentID= null
-const [sid,setSid]=useState(segmentID)
-const [pod,setPod]=useState(false)
-const [countDown,setCOuntDownn] = useState("down")
+const [sid,setSid]=useState(heatSeries)
+
 function onSaveSegment_record(val){
   setShowMenu(false)
   // saveHeatData(segmentID,val)
@@ -39,11 +42,22 @@ saveHeatData(sid,val).then(heatSeries => {
 
 }
 
+
+
 useEffect(()=>{
 
   getHeatData(sid)
 
 },[sid])
+
+async function onlaunchHeat(){
+  console.log(heatData?.id)
+  const n = await launchHeat(heatData?.id); // Launch the heat with ID 1
+  if(n!=false){
+    navigation.goBack()
+
+  }
+}
 function getHeatData(sid){
   fetchHeatData(sid).then(heatData => {
     if (heatData) {
@@ -55,7 +69,25 @@ function getHeatData(sid){
 });
 }
 
-function RenderItem({item}){
+function RenderItem({item,index}){
+
+const [cue_at,setCue_at]=useState(10)
+
+ async function addSOund(){
+  if(cue_at){
+    const soundData = {
+      cue_at: Number(cue_at), // in seconds
+      audio: 'audio file' // replace with actual audio file path or identifier
+  };
+  
+  await addSoundToTimeSegment(sid, index, soundData);
+  getHeatData(sid)
+  }
+  else{
+    Alert.alert("Required","PLease fille the cue_at value.")
+  }
+ 
+  }
   function RenderSoundOPtions({item}){
     return(
       <View style={DataListStyle.SessionWrapper_Inner}>
@@ -70,9 +102,11 @@ function RenderItem({item}){
 </Text>
 
 <View style={{flexDirection:'row'}}>
-
-<Entypo name="upload" size={WindowHeight/24} color={Colors.lightTxt} />
-<Fontisto name="record" size={WindowHeight/24} style={{marginLeft:10}}color={Colors.danger} />
+<Text style={[DataListStyle.Sessiontxt_inner]}>
+  {item.audio}
+</Text>
+{/* <Entypo name="upload" size={WindowHeight/24} color={Colors.lightTxt} />
+<Fontisto name="record" size={WindowHeight/24} style={{marginLeft:10}}color={Colors.danger} /> */}
 </View>
 
     </View>
@@ -107,6 +141,40 @@ renderItem={({item})=>{
   )
 }}
 />
+
+<View style={DataListStyle.SessionWrapper_Inner}>
+<Text style={DataListStyle.Sessiontxt_inner}>
+  Custom Sound Option
+</Text>
+<View style={GlobalStyles.RowMaker}>
+<Text style={DataListStyle.Sessiontxt_inner}>
+  CUE AT 
+</Text>
+<TextInput
+  value={cue_at.toString()}
+  onChangeText={(e)=> setCue_at(e)}
+  placeholder='Type Cue Seconds'
+  style={[DataListStyle.Sessiontxt_inner,{marginLeft:5}]}
+  />
+</View>
+
+<Text style={[DataListStyle.Sessiontxt_inner,{color:"transparent"}]}>
+  N/A
+</Text>
+
+<View style={{flexDirection:'row'}}>
+
+<Entypo name="upload" size={WindowHeight/24} color={Colors.lightTxt} />
+<TouchableOpacity
+onPress={()=> addSOund()}
+>
+
+<Fontisto name="record" size={WindowHeight/24} style={{marginLeft:10}}color={Colors.danger} />
+</TouchableOpacity>
+
+</View>
+
+    </View>
     
     </View>
 
@@ -155,17 +223,31 @@ hide={true}
     ADD HEAT
 </Text>
 
-<SmallbtnII 
+<View style={{flexDirection:'row',alignItems:'center'}}>
+  <RoundBtn 
+  icon={"plus"}
+  onpress={()=>onOpenMENU()}
+  />
+    <RoundBtn 
+  icon={"user"}
+  onpress={()=> navigation.navigate("LaneScreen",{heatSeries:sid})}
+  />
+    <RoundBtn 
+  icon={"rocket-launch"}
+  onpress={()=> onlaunchHeat()}
+  />
+</View>
+{/* <SmallbtnII 
 OnPress={onOpenMENU}
-/>
+/> */}
 </View>
 
 <SegmentHeader/>
 <FlatList 
 data={heatData.time_segments}
-renderItem={({item})=>{
+renderItem={({item,index})=>{
   return(
-    <RenderItem item={item}/>
+    <RenderItem item={item} index={index}/>
   )
 }}
 />

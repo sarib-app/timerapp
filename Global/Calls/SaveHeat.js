@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import lanesData from '../../Components/DataMOdules/DataList/Lanes';
 async function saveHeatData(heatSeries, timeSegment) {
     try {
         const storedHeats = await AsyncStorage.getItem('heats');
@@ -20,7 +20,7 @@ async function saveHeatData(heatSeries, timeSegment) {
                 total_duration: timeSegment.duration,
                 launched: false,
                 time_segments: [timeSegment],
-                lanes: [],
+                lanes: lanesData,
             };
 
             heats.push(newHeat);

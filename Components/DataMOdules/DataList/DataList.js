@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import DataListStyle from './DataListStyles';
@@ -8,29 +8,33 @@ import { WindowHeight, WindowWidth } from '../../../Global/components/Dimensions
 import Colors from '../../../Global/Branding/colors';
 import SmallbtnII from '../../../Global/components/SmallBtnII';
 import AddSessionMenu from '../../Modals/HeatMenu';
+import getAllHeatsData from '../../../Global/Calls/getHeat';
+import { useNavigation } from '@react-navigation/native';
+import { convertSecondsToTime } from '../../../Global/Calls/ConvertToSEconds';
+import launchHeat from '../../../Global/Calls/ChangeLaunch';
 
 
 export default function Datalist() {
 const [showMenu,setShowMenu]= useState(false)
+const navigation = useNavigation()
 
-const data = [
-  {
-    id:1,
-    title:"Heat 1",
-    time:"1:00"
-  },
-  {
-    id:2,
-    title:"Heat 1",
-    time:"1:00"
-  },
-  
-]
+const [data,setData]=useState([])
 
+useEffect(()=>{
 
-function Btn({clr,icon}){
+  fetchHeats()
+},[])
+
+async function fetchHeats() {
+  const allHeats = await getAllHeatsData();
+  console.log(allHeats);
+  setData(allHeats) // This will log all the heats data
+}
+
+function Btn({clr,icon,onpress}){
   return(
     <TouchableOpacity
+    onPress={()=> onpress()}
 style={[DataListStyle.IconWrapper,{backgroundColor:clr}]}
 >
   {
@@ -44,18 +48,28 @@ style={[DataListStyle.IconWrapper,{backgroundColor:clr}]}
   )
 }
 function RenderItem({item}){
+
+  async function onlaunchHeat(){
+    console.log(item?.id)
+    const n = await launchHeat(item?.id); // Launch the heat with ID 1
+    if(n!=false){
+      navigation.goBack()
+  
+    }
+  }
   return(
     <View style={DataListStyle.SessionWrapper}>
 <Text style={DataListStyle.Sessiontxt}>
-  Heat 1
+  Heat {item.heat_series}
 </Text>
 <Text style={DataListStyle.Sessiontxt}>
-  1:00
+  {convertSecondsToTime(item.total_duration)}
 </Text>
 <View style={GlobalStyles.RowMaker}>
 <Btn
 clr={Colors.danger}
 icon={"pencil"}
+onpress={()=>navigation.navigate('HeatList', { heatSeries : item.heat_series})}
 />
 <View
 style={{marginHorizontal:5}}
@@ -64,6 +78,8 @@ style={{marginHorizontal:5}}
 <Btn
 clr={Colors.send}
 icon={"minus-a"}
+onpress={{}}
+
 />
 
 </View>
@@ -71,6 +87,8 @@ icon={"minus-a"}
 <Btn
 clr={Colors.bgIv}
 icon={"rocket"}
+onpress={()=> onlaunchHeat()}
+
 />
 </View>
     </View>

@@ -16,7 +16,7 @@ const naivgation = useNavigation()
 
         <View style={HeatStyles.container}>
               <TouchableOpacity 
-              onPress={()=> naivgation.navigate("HeatList")}
+              onPress={()=> naivgation.navigate('HeatList', { heatSeries : null})}
               style={[HeatStyles.TextWrapper,{paddingTop:0}]}>
    
         
