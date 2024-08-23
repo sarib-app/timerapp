@@ -9,7 +9,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Controls_layout1 from './Controls_Layout1';
 import Controls_layout2 from './Controls_Layout2';
 import { WindowHeight, WindowWidth } from '../../Global/components/Dimensions';
-
 export default function HomeScreen() {
   const navigation = useNavigation();
   const [locked, setlocked] = useState(true);
@@ -18,7 +17,8 @@ export default function HomeScreen() {
   const [data, setData] = useState([]);
   const [currentHeat, setCurrentHeat] = useState(null);
   const [timer, setTimer] = useState(null);
-  const [timeLeft, setTimeLeft] = useState(0);
+  const [currentSegmentIndex, setCurrentSegmentIndex] = useState(0);
+  const [segmentTimeLeft, setSegmentTimeLeft] = useState(0);
 
   useEffect(() => {
     async function fetchLaunchedHeat() {
@@ -30,7 +30,7 @@ export default function HomeScreen() {
         if (launchedHeat) {
           setCurrentHeat(launchedHeat);
           setData(launchedHeat.lanes || []);
-          setTimeLeft(launchedHeat.total_duration || 0);
+          setSegmentTimeLeft(launchedHeat.time_segments[0].duration || 0);
         } else {
           Alert.alert('No heat launched', 'Please launch a heat first.');
         }
@@ -43,17 +43,17 @@ export default function HomeScreen() {
   }, []);
 
   useEffect(() => {
-    if (timeLeft > 0) {
+    if (segmentTimeLeft > 0) {
       const timerId = setInterval(() => {
-        setTimeLeft(timeLeft - 1);
+        setSegmentTimeLeft(prevTime => prevTime - 1);
       }, 1000);
       setTimer(timerId);
-    } else if (timeLeft === 0 && currentHeat) {
-      handleNextHeat();
+    } else if (segmentTimeLeft === 0 && currentHeat) {
+      handleNextSegment();
     }
 
     return () => clearInterval(timer);
-  }, [timeLeft]);
+  }, [segmentTimeLeft]);
 
   const launchHeat = async (heatId) => {
     try {
@@ -71,10 +71,37 @@ export default function HomeScreen() {
       if (launchedHeat) {
         setCurrentHeat(launchedHeat);
         setData(launchedHeat.lanes || []);
-        setTimeLeft(launchedHeat.total_duration || 0);
+        setCurrentSegmentIndex(0);
+        setSegmentTimeLeft(launchedHeat.time_segments[0].duration || 0);
+        clearInterval(timer);
       }
     } catch (error) {
       console.error('Error launching heat:', error);
+    }
+  };
+
+  const handleNextSegment = async () => {
+    if (!currentHeat) return;
+
+    const nextSegmentIndex = currentSegmentIndex + 1;
+    if (nextSegmentIndex < currentHeat.time_segments.length) {
+      const nextSegment = currentHeat.time_segments[nextSegmentIndex];
+      setCurrentSegmentIndex(nextSegmentIndex);
+
+      if (nextSegment.preload) {
+        await preloadCountdown();
+      }
+
+      setSegmentTimeLeft(nextSegment.duration);
+    } else {
+      handleNextHeat();
+    }
+  };
+
+  const preloadCountdown = async () => {
+    for (let i = 3; i > 0; i--) {
+      setSegmentTimeLeft(i);
+      await new Promise(resolve => setTimeout(resolve, 1000));
     }
   };
 
@@ -117,7 +144,7 @@ export default function HomeScreen() {
       clearInterval(timer);
       setTimer(null);
     } else {
-      setTimeLeft(timeLeft - 1);
+      setSegmentTimeLeft(segmentTimeLeft - 1);
     }
   };
 
@@ -144,9 +171,9 @@ export default function HomeScreen() {
           <Controls_layout1 
             locked={false}
             onPress={() => setShowVid(true)}
-            timeLeft={timeLeft}
+            timeLeft={segmentTimeLeft}
             onPlayPause={handlePlayPause}
-            onNext={handleNextHeat}
+            onNext={handleNextSegment}
             onPrev={handlePrevHeat}
           /> 
           : <Controls_layout2 />
@@ -187,6 +214,7 @@ export default function HomeScreen() {
     </View>
   );
 }
+
 
 function HeaderItems({ item }) {
   const [selection, setSelection] = useState(1);
