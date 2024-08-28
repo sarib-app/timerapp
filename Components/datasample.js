@@ -19,11 +19,25 @@ const dataSAmple = [
 
                     }// }
                  ]
+                },
+                {
+                    
+                        id:1,
+                        duration:32, //in seconds
+                        play_sequence:"up/down",
+                        preload:false, //true or false
+                        sounds:[
+                           {
+                           cue_at:23,//in secdonds
+                           audio:"audio file" 
+       
+                           }// }
+                        ]
+                       
                 }
         ],
         lanes:[
-            {athlete_name:"",
-            gym_name:""}
+          /////
            ],
 
     }
