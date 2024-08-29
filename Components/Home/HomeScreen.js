@@ -12,6 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 import { SwipeButton } from 'react-native-expo-swipe-button';
 import { getLaunchedHeat } from '../DataMOdules/DataList/getLaunchedHeat';
 import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function HomeScreen() {
@@ -87,7 +88,7 @@ const [currentIndex,setCUrrentHeatINdex]=useState(-1)
       
 
       useEffect(()=>{
- 
+//  AsyncStorage.clear()
      async function getData(){
       const data = await getLaunchedHeat()
       if(data){
@@ -161,6 +162,10 @@ showsHorizontalScrollIndicator={false}
     name="menu" size={WindowHeight/12} color={Colors.FontColorI} />
 </View>
 {
+  heatData && heatData.time_segments&&
+<>
+
+{
   !showVid ? 
   <Controls_layout1 
   locked={false}
@@ -171,6 +176,9 @@ showsHorizontalScrollIndicator={false}
 :
   <Controls_layout2
   />
+}
+</>
+
 }
 
 </View>
