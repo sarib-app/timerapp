@@ -42,4 +42,21 @@ const dataSAmple = [
 
     }
 ]
+
+const datatransition = [
+    {        id:1, //should be increased with +1 according to the last record id
+        type:"transition",
+        transition_series: 1 ,//should automatically caluclate according to last added record where type === transition,
+        launched:false, //by default false
+        total_duration:"",/// sum of all durations in time_segment
+       
+        time_segments:[
+            {
+                video_file: "file",//
+                cue_at:"s",
+                duration:""
+            }
+        ]
+    }
+]
 export {dataSAmple}

@@ -25,19 +25,21 @@ const naivgation = useNavigation()
         </Text>
         
         </TouchableOpacity>
-        <TouchableOpacity style={HeatStyles.TextWrapper}>
+        <TouchableOpacity 
+              onPress={()=> naivgation.navigate('TransitionScreen')}
+        style={HeatStyles.TextWrapper}>
         
         <Text style={HeatStyles.TextStyles}>
         Transition
         </Text>
         </TouchableOpacity>
-        
+{/*         
         <TouchableOpacity style={HeatStyles.TextWrapper}>
         
         <Text style={HeatStyles.TextStyles}>
           Lane Assignments
         </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         </View>
         // </Modal>
     )

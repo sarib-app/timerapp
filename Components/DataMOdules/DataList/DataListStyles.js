@@ -13,7 +13,7 @@ const WindowWidth = Dimensions.get('screen').width
         height:WindowHeight,
         backgroundColor:Colors.Dark,
         flexDirection: 'column',
-        justifyContent:"space-between",
+        // justifyContent:"space-between",
         alignItems:'center',
       paddingBottom:40,
           },

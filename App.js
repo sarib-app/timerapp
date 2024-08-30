@@ -5,6 +5,7 @@ import HomeScreen from './Components/Home/HomeScreen';
 import Datalist from './Components/DataMOdules/DataList/DataList';
 import HeatList from './Components/DataMOdules/DataList/HeatList';
 import LaneScreen from './Components/DataMOdules/DataList/LanesScreen';
+import TransitionScreen from './Components/DataMOdules/DataList/TransitionScreen';
 
 
 // import 'expo-dev-client'
@@ -19,9 +20,8 @@ const App = () => {
         <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Datalist" component={Datalist} options={{ headerShown: false }} />
         <Stack.Screen name="HeatList" component={HeatList} options={{ headerShown: false }} />
+        <Stack.Screen name="TransitionScreen" component={TransitionScreen} options={{ headerShown: false }} />
         <Stack.Screen name="LaneScreen" component={LaneScreen} options={{ headerShown: false }} />
-
-
       </Stack.Navigator>
     </NavigationContainer>
   );

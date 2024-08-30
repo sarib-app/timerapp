@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import HomeStyles from './HomeStyles';
 import Colors from '../../Global/Branding/colors';
 import { EvilIcons, Fontisto, Ionicons } from '@expo/vector-icons';
@@ -8,11 +8,13 @@ import Slider from '../../Global/components/Slider';
 import Controls_layout1 from './Controls_Layout1';
 import Controls_layout2 from './Controls_Layout2';
 import { WindowHeight, WindowWidth } from '../../Global/components/Dimensions';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { SwipeButton } from 'react-native-expo-swipe-button';
 import { getLaunchedHeat } from '../DataMOdules/DataList/getLaunchedHeat';
 import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getNextHeat } from '../../Global/Calls/getNextHeat';
+import { getPreviousHeat } from '../../Global/Calls/getPreviousHeatINdex';
 
 
 export default function HomeScreen() {
@@ -23,70 +25,8 @@ const [showVid,setShowVid]=useState(false)
 const [heatData,setHeatData]=useState([])
 const [currentIndex,setCUrrentHeatINdex]=useState(-1)
 
-    const data = [
-        {
-          id: 1,
-          title: "Lane 1",
-          name: "John Dayn",
-          gym: "XYZ Fitness"
-        },
-        {
-          id: 2,
-          title: "Lane 2",
-          name: "Jane Smith",
-          gym: "ABC Gym"
-        },
-        {
-          id: 3,
-          title: "Lane 3",
-          name: "Mike Johnson",
-          gym: "FitLife Center"
-        },
-        {
-          id: 4,
-          title: "Lane 4",
-          name: "Emily Davis",
-          gym: "PowerHouse Gym"
-        },
-        {
-          id: 5,
-          title: "Lane 5",
-          name: "Chris Lee",
-          gym: "Gold's Gym"
-        },
-        {
-          id: 6,
-          title: "Lane 6",
-          name: "Anna Brown",
-          gym: "Anytime Fitness"
-        },
-        {
-          id: 7,
-          title: "Lane 7",
-          name: "James Wilson",
-          gym: "Planet Fitness"
-        },
-        {
-          id: 8,
-          title: "Lane 8",
-          name: "Sarah Martinez",
-          gym: "Crunch Fitness"
-        },
-        {
-          id: 9,
-          title: "Lane 9",
-          name: "David Garcia",
-          gym: "24 Hour Fitness"
-        },
-        {
-          id: 10,
-          title: "Lane 10",
-          name: "Laura Anderson",
-          gym: "Equinox"
-        }
-      ];
-      
-
+  
+const focused = useIsFocused()
       useEffect(()=>{
 //  AsyncStorage.clear()
      async function getData(){
@@ -99,7 +39,32 @@ const [currentIndex,setCUrrentHeatINdex]=useState(-1)
      }
      getData()
 
-      },[])
+      },[focused])
+
+
+      async function ongetNextHeat(){
+        const data = await getNextHeat(currentIndex)
+      if(data){
+        setHeatData([])
+        setHeatData(data.heat)
+        setCUrrentHeatINdex(data.index)
+        console.log(data)
+      }
+      else{
+        Alert.alert("Sorry","No more/Transition heat found!")
+      }
+      }
+      async function ongetPreviousHeat(){
+        const data = await getPreviousHeat(currentIndex)
+      if(data){
+        setHeatData([])
+
+        setHeatData(data.heat)
+        setCUrrentHeatINdex(data.index)
+        console.log(data)
+      }
+      }
+
 
       function HeaderItems  ({item}){
         const [seletion,setSelection]= useState(1)
@@ -171,7 +136,8 @@ showsHorizontalScrollIndicator={false}
   locked={false}
   onPress={()=> setShowVid(true)}
   heatData={heatData}
-
+ongetNextHeat={ongetNextHeat}
+ongetPreviousHeat={ongetPreviousHeat}
   /> 
 :
   <Controls_layout2

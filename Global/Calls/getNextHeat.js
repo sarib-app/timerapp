@@ -1,3 +1,5 @@
+import react from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export const getNextHeat = async (currentHeatIndex) => {
     try {
       const storedHeats = await AsyncStorage.getItem('heats');

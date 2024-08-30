@@ -6,13 +6,15 @@ import { EvilIcons, Ionicons } from '@expo/vector-icons';
 import { WindowHeight } from '../../Global/components/Dimensions';
 import { convertSecondsToTime } from '../../Global/Calls/ConvertToSEconds';
 
-export default function Controls_layout1({ locked, onPress, heatData }) {
+export default function Controls_layout1({ locked, onPress, heatData ,ongetNextHeat,ongetPreviousHeat}) {
   const [data, setData] = useState(heatData);
   const [currentSegmentIndex, setCurrentSegmentIndex] = useState(0);
   const [timer, setTimer] = useState(0);
   const [timer_Saved, setTimer_Saved] = useState(0);
   const [timeSegment,setTImesegment]=useState([])
-
+  const [preloadCOunt,setPreLoadCount]=useState(3)
+const [preLoad,setPreload]=useState(false)
+const [playPreLOad,setPlayProload]=useState(false)
   
   const [play, setPlay] = useState(false);
   const [sequence, setSequence] = useState(0);
@@ -21,14 +23,17 @@ export default function Controls_layout1({ locked, onPress, heatData }) {
 
   useEffect(()=>{
     setTimerINital(currentSegmentIndex)
-  },[])
+  },[heatData])
   async function setTimerINital(currentSegmentIndex){
 
   const i = Number(currentSegmentIndex)
-  const d = await data?.time_segments
+  const d = await heatData?.time_segments
   const filtereSegment = await d[i]
   const sequence_filtered = await filtereSegment?.play_sequence
   const time = await sequence_filtered === "down" ? filtereSegment.duration : 0
+  const preLoad_val= await filtereSegment?.preload
+  setPreload(preLoad_val)
+  setPreLoadCount(3)
   setTImesegment(d)
   setSequence(sequence_filtered)
   setTimer(time)
@@ -95,21 +100,78 @@ export default function Controls_layout1({ locked, onPress, heatData }) {
     }
     else{
       console.log("call next heat")
+      ongetNextHeat()
+      
     }
    
   }
+  
+
+
+
+
+
+
+////////////////// Hnalde preload sounds
+
+useEffect(() => {
+  if(preloadCOunt >1 ){
+
+  if (playPreLOad) {
+    StartPreload_Timer();
+  } else {
+    clearInterval(intervalRef.current);
+  }
+
+  return () => clearInterval(intervalRef.current); // Cleanup on unmount
+  }
+
+}, [playPreLOad]);
+
+useEffect(() => {
+  if (playPreLOad) {
+
+      if (preloadCOunt <=0) {
+        // handleNextSegment()
+        setPreload(false)
+        setPlay(true)
+      setPlayProload(false)
+      
+        
+      }
+  }
+}, [preloadCOunt]);
+
+
+function StartPreload_Timer(){
+  if(playPreLOad && preLoad){
+    intervalRef.current = setInterval(() => {
+      setPreLoadCount(prevCount => prevCount - 1);
+    }, 1000);
+    return () => clearInterval(intervalRef.current);
+  }
+}
+
+
+
 
   return (
     <>
-      <Text style={HomeStyles.TimeBig}>{convertSecondsToTime(timer)}</Text>
+    {
+      preLoad === true ?
+      <Text style={HomeStyles.TimeBig}>{convertSecondsToTime(preloadCOunt)}</Text>
+:
+<Text style={HomeStyles.TimeBig}>{convertSecondsToTime(timer)}</Text>
+
+    }
 
       {!locked && (
         <View style={HomeStyles.TimeWrapper}>
           <Ionicons name="play-back-outline" size={WindowHeight / 9} color={Colors.FontColorI} />
-          <TouchableOpacity onPress={() => handleNextSegment()}>
+          <TouchableOpacity onPress={() => setPlay(false)}>
             <EvilIcons name="play" size={WindowHeight / 9} color={Colors.FontColorI} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => setPlay(true)}>
+          <TouchableOpacity onPress={() => { preLoad === true ? setPlayProload(true): setPlay(true)}}>
             <EvilIcons name="play" size={WindowHeight / 9} color={Colors.FontColorI} />
           </TouchableOpacity>
           <Ionicons onPress={() => onPress()} name="play-forward-outline" size={WindowHeight / 9} color={Colors.FontColorI} />
