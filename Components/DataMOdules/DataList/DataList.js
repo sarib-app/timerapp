@@ -58,11 +58,14 @@ function RenderItem({item}){
     }
   }
   return(
+    <>
+    {
+      item.type ==="heat"?
     <View style={DataListStyle.SessionWrapper}>
-<Text style={DataListStyle.Sessiontxt}>
+<Text style={[DataListStyle.Sessiontxt,{width:WindowWidth/7}]}>
   Heat {item.heat_series}
 </Text>
-<Text style={DataListStyle.Sessiontxt}>
+<Text style={[DataListStyle.Sessiontxt,{width:WindowWidth/7}]}>
   {convertSecondsToTime(item.total_duration)}
 </Text>
 <View style={GlobalStyles.RowMaker}>
@@ -91,7 +94,45 @@ onpress={()=> onlaunchHeat()}
 
 />
 </View>
-    </View>
+    </View>:
+     <View style={DataListStyle.SessionWrapper}>
+     <Text style={[DataListStyle.Sessiontxt,{width:WindowWidth/7}]}>
+       Transition {item.transition_series}
+     </Text>
+     <Text style={[DataListStyle.Sessiontxt,{width:WindowWidth/7}]}>
+       {convertSecondsToTime(item.total_duration)}
+     </Text>
+     <View style={GlobalStyles.RowMaker}>
+     <Btn
+     clr={Colors.danger}
+     icon={"pencil"}
+     onpress={()=>navigation.navigate('TransitionScreen', { trans_series : item.transition_series,id:item.id})}
+     />
+     <View
+     style={{marginHorizontal:5}}
+     >
+     
+     <Btn
+     clr={Colors.send}
+     icon={"minus-a"}
+     onpress={{}}
+     
+     />
+     
+     </View>
+     
+     <Btn
+     clr={Colors.bgIv}
+     icon={"rocket"}
+     onpress={()=> onlaunchHeat()}
+     
+     />
+     </View>
+         </View>
+    }
+
+    </>
+
   )
 }
 function onOpenMENU(){

@@ -17,16 +17,14 @@ const naivgation = useNavigation()
         <View style={HeatStyles.container}>
               <TouchableOpacity 
               onPress={()=> naivgation.navigate('HeatList', { heatSeries : null})}
-              style={[HeatStyles.TextWrapper,{paddingTop:0}]}>
-   
-        
+              style={[HeatStyles.TextWrapper,{paddingTop:0}]}>     
         <Text style={HeatStyles.TextStyles}>
           Heat
         </Text>
         
         </TouchableOpacity>
         <TouchableOpacity 
-              onPress={()=> naivgation.navigate('TransitionScreen')}
+        onPress={()=> naivgation.navigate('TransitionScreen', {trans_series: null ,id:null})}
         style={HeatStyles.TextWrapper}>
         
         <Text style={HeatStyles.TextStyles}>

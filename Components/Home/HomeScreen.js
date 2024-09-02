@@ -15,6 +15,7 @@ import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getNextHeat } from '../../Global/Calls/getNextHeat';
 import { getPreviousHeat } from '../../Global/Calls/getPreviousHeatINdex';
+import lanesData from '../DataMOdules/DataList/Lanes';
 
 
 export default function HomeScreen() {
@@ -23,6 +24,8 @@ const [locked,setlocked]=useState(true)
 const [temp_play,setTempPlay]=useState(false)
 const [showVid,setShowVid]=useState(false)
 const [heatData,setHeatData]=useState([])
+const [heatData_lanes,setHeatData_lanes]=useState([])
+
 const [currentIndex,setCUrrentHeatINdex]=useState(-1)
 
   
@@ -34,6 +37,14 @@ const focused = useIsFocused()
       if(data){
         setHeatData(data.heat)
         setCUrrentHeatINdex(data.index)
+        if(data.heat.type === "transition"){
+          setShowVid(true)
+        }
+        else{
+        setHeatData_lanes(data.heat?.lanes)
+
+          setShowVid(false)
+        }
         console.log(data)
       }
      }
@@ -48,6 +59,15 @@ const focused = useIsFocused()
         setHeatData([])
         setHeatData(data.heat)
         setCUrrentHeatINdex(data.index)
+
+        if(data.heat.type === "transition"){
+          setShowVid(true)
+        }
+        else{
+        setHeatData_lanes(data.heat?.lanes)
+
+          setShowVid(false)
+        }
         console.log(data)
       }
       else{
@@ -61,6 +81,14 @@ const focused = useIsFocused()
 
         setHeatData(data.heat)
         setCUrrentHeatINdex(data.index)
+        if(data.heat.type === "transition"){
+          setShowVid(true)
+        }
+        else{
+        setHeatData_lanes(data.heat?.lanes)
+
+          setShowVid(false)
+        }
         console.log(data)
       }
       }
@@ -101,10 +129,10 @@ const focused = useIsFocused()
   return (
     <View style={HomeStyles.container}>
       {
-        heatData &&
+        heatData_lanes &&
     <View style={HomeStyles.Header}>
 <FlatList 
-data={heatData?.lanes}
+data={heatData_lanes}
 renderItem={({item})=> <HeaderItems item={item}/>}
 horizontal
 showsHorizontalScrollIndicator={false}
@@ -141,6 +169,11 @@ ongetPreviousHeat={ongetPreviousHeat}
   /> 
 :
   <Controls_layout2
+  locked={false}
+  onPress={()=> setShowVid(true)}
+  heatData={heatData}
+ongetNextHeat={ongetNextHeat}
+ongetPreviousHeat={ongetPreviousHeat}
   />
 }
 </>

@@ -167,14 +167,17 @@ function StartPreload_Timer(){
 
       {!locked && (
         <View style={HomeStyles.TimeWrapper}>
-          <Ionicons name="play-back-outline" size={WindowHeight / 9} color={Colors.FontColorI} />
+          <Ionicons 
+          onPress={()=> ongetNextHeat()}
+          
+          name="play-back-outline" size={WindowHeight / 9} color={Colors.FontColorI} />
           <TouchableOpacity onPress={() => setPlay(false)}>
             <EvilIcons name="play" size={WindowHeight / 9} color={Colors.FontColorI} />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => { preLoad === true ? setPlayProload(true): setPlay(true)}}>
             <EvilIcons name="play" size={WindowHeight / 9} color={Colors.FontColorI} />
           </TouchableOpacity>
-          <Ionicons onPress={() => onPress()} name="play-forward-outline" size={WindowHeight / 9} color={Colors.FontColorI} />
+          <Ionicons onPress={() => ongetNextHeat()} name="play-forward-outline" size={WindowHeight / 9} color={Colors.FontColorI} />
         </View>
       )}
     </>
