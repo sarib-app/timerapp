@@ -168,7 +168,7 @@ function StartPreload_Timer(){
       {!locked && (
         <View style={HomeStyles.TimeWrapper}>
           <Ionicons 
-          onPress={()=> ongetNextHeat()}
+          onPress={()=> ongetPreviousHeat()}
           
           name="play-back-outline" size={WindowHeight / 9} color={Colors.FontColorI} />
           <TouchableOpacity onPress={() => setPlay(false)}>

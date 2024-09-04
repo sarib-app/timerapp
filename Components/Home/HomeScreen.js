@@ -37,6 +37,7 @@ const focused = useIsFocused()
       if(data){
         setHeatData(data.heat)
         setCUrrentHeatINdex(data.index)
+        console.log(data)
         if(data.heat.type === "transition"){
           setShowVid(true)
         }
@@ -164,16 +165,16 @@ showsHorizontalScrollIndicator={false}
   locked={false}
   onPress={()=> setShowVid(true)}
   heatData={heatData}
-ongetNextHeat={ongetNextHeat}
-ongetPreviousHeat={ongetPreviousHeat}
+ongetNextHeat={()=>ongetNextHeat()}
+ongetPreviousHeat={()=>ongetPreviousHeat()}
   /> 
 :
   <Controls_layout2
   locked={false}
   onPress={()=> setShowVid(true)}
   heatData={heatData}
-ongetNextHeat={ongetNextHeat}
-ongetPreviousHeat={ongetPreviousHeat}
+  ongetNextHeat={()=>ongetNextHeat()}
+  ongetPreviousHeat={()=>ongetPreviousHeat()}
   />
 }
 </>

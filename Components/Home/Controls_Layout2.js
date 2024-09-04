@@ -99,7 +99,7 @@ export default function Controls_layout2({ locked, onPress, heatData, ongetNextH
 
   const [data, setData] = useState(heatData);
   const [currentSegmentIndex, setCurrentSegmentIndex] = useState(0);
-  const [timer, setTimer] = useState(0);
+  const [timer, setTimer] = useState(1);
   const [timer_Saved, setTimer_Saved] = useState(0);
   const [timeSegment, setTimeSegment] = useState([]);
   const [play, setPlay] = useState(false);
@@ -152,7 +152,7 @@ export default function Controls_layout2({ locked, onPress, heatData, ongetNextH
       setCurrentSegmentIndex(currentSegmentIndex + 1);
       setTimerInitial(currentSegmentIndex + 1);
     } else {
-      console.log("call next heat");
+      console.log("call next heat from 2 ");
       ongetNextHeat();
     }
   }
