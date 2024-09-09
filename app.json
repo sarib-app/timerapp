@@ -18,14 +18,14 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.battleground.app"
+      "bundleIdentifier": "com.battlegroundapp.app"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.battleground.app"
+      "package": "com.battlegroundapp.app"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -35,7 +35,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "d3290443-9756-4944-847d-af4de9cafbdd"
+        "projectId": "58d29bb4-46f3-4bd3-ace4-65dedf8a5d48"
       }
     }
   }
