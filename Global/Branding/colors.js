@@ -4,10 +4,8 @@ const Colors = {
     SeconderyColor:"#EBF0FD",
     placeHolder:"rgba(0,0,0,0.3)",
     inActive:"rgba(255,255,255,0.5)",
-        FontColorI:"#D9D9D9",
+    FontColorI:"#D9D9D9",
     FontColorII:"rgba(0,0,0,0.7)",
-    
-
     BgColor:"#ECEBF5",
     BgColorII:"#333333",
     danger:"red",
@@ -17,6 +15,6 @@ const Colors = {
     Dark:"black",
     send:"#1db954",
     deposit:"#FA754C"
-
 }
+
 export default Colors

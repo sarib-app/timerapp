@@ -137,10 +137,15 @@ placeholderTextColor={Colors.FontColorI}
 style={[DataListStyle.Sessiontxt,{marginLeft:5}]}
 />
 <View style={GlobalStyles.RowMaker}>
+
+{/* on clicking this icon let user upload video from gallery/ */}
+
 <Entypo name="upload" size={WindowHeight/24} color={Colors.lightTxt} />
 <TouchableOpacity
 // onPress={()=> addSOund()}
 >
+
+{/* on clicking this icon let user open camera and record a video  */}
 
 <Fontisto name="record" size={WindowHeight/24} style={{marginLeft:10}}color={Colors.danger} />
 

@@ -8,7 +8,9 @@ function RoundBtn({icon,onpress}){
     return(
       <TouchableOpacity
       onPress={()=> onpress()}
-  style={[{
+  style={
+    [
+      {
     borderRadius:1000,
     // padding:WindowHeight/60,
     justifyContent:'center',
@@ -16,7 +18,8 @@ function RoundBtn({icon,onpress}){
     backgroundColor:Colors.danger,
     width:WindowHeight/15,
     height:WindowHeight/15,margin:1
-  },{backgroundColor:Colors.BgColorII}]}
+  },{backgroundColor:Colors.BgColorII}
+]}
   >
     {
       icon == "user" &&
