@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import HomeStyles from './HomeStyles';
 import Colors from '../../Global/Branding/colors';
-import { EvilIcons, Ionicons } from '@expo/vector-icons';
+import { AntDesign, EvilIcons, Ionicons } from '@expo/vector-icons';
 import { WindowHeight } from '../../Global/components/Dimensions';
 import { convertSecondsToTime } from '../../Global/Calls/ConvertToSEconds';
 
@@ -73,10 +73,14 @@ const [playPreLOad,setPlayProload]=useState(false)
   const StartTimer = () => {
     if(play){
       if(sequence=== "down" ){
+        if(timer>0){
+
         intervalRef.current = setInterval(() => {
           setTimer(prevCount => prevCount - 1);
         }, 1000);
         return () => clearInterval(intervalRef.current);
+      }
+
       }else{
         intervalRef.current = setInterval(() => {
           setTimer(prevCount => prevCount + 1);
@@ -172,7 +176,9 @@ function StartPreload_Timer(){
           
           name="play-back-outline" size={WindowHeight / 9} color={Colors.FontColorI} />
           <TouchableOpacity onPress={() => setPlay(false)}>
-            <EvilIcons name="play" size={WindowHeight / 9} color={Colors.FontColorI} />
+            {/* <EvilIcons name="play" size={WindowHeight / 9} color={Colors.FontColorI} /> */}
+            <AntDesign name="pausecircleo" size={WindowHeight / 12} color={Colors.FontColorI} />
+
           </TouchableOpacity>
           <TouchableOpacity onPress={() => { preLoad === true ? setPlayProload(true): setPlay(true)}}>
             <EvilIcons name="play" size={WindowHeight / 9} color={Colors.FontColorI} />

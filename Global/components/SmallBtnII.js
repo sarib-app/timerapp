@@ -17,7 +17,7 @@ if(hide)
 <TouchableOpacity 
 onPress={()=> OnPress()}
 style={[GlobalStyles.SmallBtn, {opacity:0}]}>
-<MaterialIcons name="star-purple500" size={WindowHeight/24} color={Colors.FontColorI} />
+<MaterialIcons name="star-purple500" size={WindowHeight/34} color={Colors.FontColorI} />
 <Text style={GlobalStyles.SmallBtnText}>
 Add New
 </Text>
@@ -29,7 +29,7 @@ else
 <TouchableOpacity 
 onPress={()=> OnPress()}
 style={[GlobalStyles.SmallBtn]}>
-<MaterialIcons name="star-purple500" size={WindowHeight/24} color={Colors.FontColorI} />
+<MaterialIcons name="star-purple500" size={WindowHeight/34} color={Colors.FontColorI} />
 <Text style={GlobalStyles.SmallBtnText}>
 Add New
 </Text>

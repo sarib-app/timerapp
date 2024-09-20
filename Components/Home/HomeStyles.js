@@ -38,8 +38,8 @@ const WindowWidth = Dimensions.get('screen').width
       },
       boxTitle:{
         color:Colors.FontColorI,
-        fontSize:WindowHeight/50,
-        fontWeight:'bold',
+        fontSize:WindowHeight/52,
+        fontWeight:'500',
         marginHorizontal:3,
         textAlign:"center"
       },

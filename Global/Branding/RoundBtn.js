@@ -16,23 +16,23 @@ function RoundBtn({icon,onpress}){
     justifyContent:'center',
     alignItems:'center',
     backgroundColor:Colors.danger,
-    width:WindowHeight/15,
-    height:WindowHeight/15,margin:1
+    width:WindowHeight/20,
+    height:WindowHeight/20,margin:1
   },{backgroundColor:Colors.BgColorII}
 ]}
   >
     {
       icon == "user" &&
-  <FontAwesome name={icon} size={WindowHeight/27} color={Colors.FontColorI}/>
+  <FontAwesome name={icon} size={WindowHeight/32} color={Colors.FontColorI}/>
     }
     { icon === "plus" &&
-  <AntDesign name={icon}  size={WindowHeight/27} color={Colors.FontColorI} />
+  <AntDesign name={icon}  size={WindowHeight/32} color={Colors.FontColorI} />
   
     }
 
     {
       icon === "rocket-launch" &&
-  <MaterialCommunityIcons name={icon}  size={WindowHeight/27} color={Colors.FontColorI} />
+  <MaterialCommunityIcons name={icon}  size={WindowHeight/32} color={Colors.FontColorI} />
 
     }
   </TouchableOpacity>

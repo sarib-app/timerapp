@@ -62,7 +62,7 @@ const [isEnabled, setIsEnabled] = useState
         placeholder="Type"
         keyboardType="numeric"
 
-        style={HeatStyles.TextStyles_heat}
+        style={[HeatStyles.TextStyles_heat,{width:WindowWidth/10,paddingVertical:WindowWidth/60}]}
         />
         <Text style={HeatStyles.TextStyles_heat}>
           {convertSecondsToTime(Number(duration))}

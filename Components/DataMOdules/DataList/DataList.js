@@ -9,7 +9,7 @@ import Colors from '../../../Global/Branding/colors';
 import SmallbtnII from '../../../Global/components/SmallBtnII';
 import AddSessionMenu from '../../Modals/HeatMenu';
 import getAllHeatsData from '../../../Global/Calls/getHeat';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { convertSecondsToTime } from '../../../Global/Calls/ConvertToSEconds';
 import launchHeat from '../../../Global/Calls/ChangeLaunch';
 
@@ -19,11 +19,11 @@ const [showMenu,setShowMenu]= useState(false)
 const navigation = useNavigation()
 
 const [data,setData]=useState([])
-
+const focused = useIsFocused()
 useEffect(()=>{
 
   fetchHeats()
-},[])
+},[focused])
 
 async function fetchHeats() {
   const allHeats = await getAllHeatsData();
@@ -39,9 +39,9 @@ style={[DataListStyle.IconWrapper,{backgroundColor:clr}]}
 >
   {
     icon == "pencil" ? 
-<Octicons name={icon} size={WindowHeight/27} color={Colors.FontColorI}/>
+<Octicons name={icon} size={WindowHeight/32} color={Colors.FontColorI}/>
 :
-<Fontisto  name={icon}  size={WindowHeight/27} color={Colors.FontColorI} />
+<Fontisto  name={icon}  size={WindowHeight/32} color={Colors.FontColorI} />
 
   }
 </TouchableOpacity>

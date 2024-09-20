@@ -11,13 +11,13 @@ const WindowWidth = Dimensions.get('screen').width
 container:{padding:WindowHeight/30,backgroundColor:Colors.BgColorII,position:'absolute',top:WindowHeight/10,right:WindowWidth/15,shadowColor:Colors.Dark,shadowOpacity:0.5,borderRadius:10},
 
 TextWrapper:{width:WindowWidth/6,borderBottomColor:Colors.FontColorI,borderBottomWidth:1,paddingVertical:WindowHeight/40},
-TextStyles:{color:Colors.FontColorI,fontWeight:'bold',fontSize:WindowHeight/32},
+TextStyles:{color:Colors.FontColorI,fontWeight:'bold',fontSize:WindowHeight/44},
 
 
 container_heat:{padding:WindowHeight/30,backgroundColor:Colors.BgColorII,position:'absolute',top:WindowHeight/10,right:WindowWidth/15,shadowColor:Colors.Dark,shadowOpacity:0.5,borderRadius:10,alignItems:'center'},
 
 TextWrapper_heat:{width:WindowWidth/4,borderBottomColor:Colors.FontColorI,borderBottomWidth:1,paddingVertical:WindowHeight/40,flexDirection:'row',justifyContent:'space-between',alignItems:'center'},
-TextStyles_heat:{color:Colors.FontColorI,fontWeight:'bold',fontSize:WindowHeight/32}
+TextStyles_heat:{color:Colors.FontColorI,fontWeight:'bold',fontSize:WindowHeight/44}
 
   })
   export default HeatStyles

@@ -50,6 +50,7 @@ const focused = useIsFocused()
       }
      }
      getData()
+    //  AsyncStorage.clear()
 
       },[focused])
 
@@ -205,9 +206,9 @@ ongetPreviousHeat={()=>ongetPreviousHeat()}
                 start: [0, 0.5],
                 end: [1.3, 0.5],
               }}
-              titleStyle={{color:"white",fontSize:10}}
+              titleStyle={{color:"white",fontSize:WindowHeight/40,marginLeft:50}}
                     containerStyle={{ backgroundColor: Colors.BgColorII }}
-              underlayTitle="Release to complete"
+              underlayTitle="Release to unlock"
               underlayTitleStyle={Colors.BgColorII }
             />
       </View>:

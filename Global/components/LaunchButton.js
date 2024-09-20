@@ -19,7 +19,7 @@ onPress={()=> OnPress()}
 style={[GlobalStyles.SmallBtn, {backgroundColor:Colors.send}]}>
 {/* <MaterialIcons name="star-purple500" size={WindowHeight/24} color={Colors.FontColorI} /> */}
 <Text style={GlobalStyles.SmallBtnText}>
-Launch
+Go Back
 </Text>
 </TouchableOpacity>
 )

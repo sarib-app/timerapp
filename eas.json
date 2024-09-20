@@ -1,6 +1,7 @@
 {
   "cli": {
-    "version": ">= 10.2.1"
+    "version": ">= 10.2.1",
+    "appVersionSource": "remote"
   },
   "build": {
     "development": {
@@ -10,14 +11,16 @@
     "preview": {
       "distribution": "internal"
     },
-    "production": {}
+    "production": {
+      "autoIncrement": true
+    }
   },
   "submit": {
     "production": {
-      "ios":{
-        "appleId":"FittestDevTeam@gmail.com",
-        "ascAppId":"6670748657",
-        "appleTeamId":"88G7M336Z6"
+      "ios": {
+        "appleId": "FittestDevTeam@gmail.com",
+        "ascAppId": "6670748657",
+        "appleTeamId": "88G7M336Z6"
       }
     }
   }

@@ -164,12 +164,12 @@ renderItem={({item})=>{
 
 <View style={{flexDirection:'row'}}>
 
-<Entypo name="upload" size={WindowHeight/24} color={Colors.lightTxt} />
+<Entypo name="upload" size={WindowHeight/32} color={Colors.lightTxt} />
 <TouchableOpacity
 onPress={()=> addSOund()}
 >
 
-<Fontisto name="record" size={WindowHeight/24} style={{marginLeft:10}}color={Colors.danger} />
+<Fontisto name="record" size={WindowHeight/32} style={{marginLeft:10}}color={Colors.danger} />
 </TouchableOpacity>
 
 </View>

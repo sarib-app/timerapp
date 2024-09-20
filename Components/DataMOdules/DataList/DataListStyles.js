@@ -27,13 +27,13 @@ const WindowWidth = Dimensions.get('screen').width
                   },
 
           MainTitle:{
-            fontSize:WindowHeight/18,
+            fontSize:WindowHeight/24,
             fontWeight:'bold',
             color:Colors.FontColorI,
           },
           SessionWrapper:{  
             width:WindowWidth/1.09,
-            padding:WindowHeight/34,
+            padding:WindowHeight/42,
             backgroundColor:Colors.BgColorII,
             borderRadius:WindowHeight/40,
             justifyContent:"space-between",
@@ -78,18 +78,18 @@ const WindowWidth = Dimensions.get('screen').width
             flexDirection:'row',margin:5
           },
           Session_heading_txt:{
-            fontSize:WindowHeight/23,
+            fontSize:WindowHeight/28,
             fontWeight:'bold',
             color:Colors.FontColorI,
           },
           Sessiontxt:{
-            fontSize:WindowHeight/25,
+            fontSize:WindowHeight/34,
             fontWeight:'bold',
             color:Colors.FontColorI,
           
           },
           Sessiontxt_inner:{
-            fontSize:WindowHeight/28,
+            fontSize:WindowHeight/34,
             fontWeight:'bold',
             color:Colors.FontColorI,
           
@@ -102,11 +102,12 @@ const WindowWidth = Dimensions.get('screen').width
           IconWrapper:{
             borderRadius:1000,
             // padding:WindowHeight/60,
+            marginHorizontal:WindowWidth/600,
             justifyContent:'center',
             alignItems:'center',
             backgroundColor:Colors.danger,
-            width:WindowHeight/15,
-            height:WindowHeight/15
+            width:WindowHeight/20,
+            height:WindowHeight/20
           }
 
 

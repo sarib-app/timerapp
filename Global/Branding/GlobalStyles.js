@@ -31,7 +31,7 @@ alignItems:'center'
 },
 
 SmallBtn:{
- borderRadius:20,
+ borderRadius:1000,
  padding:WindowHeight/30,
  paddingVertical:WindowHeight/80,
  backgroundColor:Colors.BgColorII,
@@ -42,7 +42,7 @@ alignItems:'center'
 },
 SmallBtnText:{
 color:Colors.FontColorI,
-fontSize:WindowHeight/33,
+fontSize:WindowHeight/41,
 },
 HistoryCard:{
 padding:20,
