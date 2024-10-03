@@ -263,12 +263,18 @@ console.log(showVid)
           onPress={()=> ongetPreviousHeat()}
           
           name="play-back-outline" size={WindowHeight / 9} color={Colors.FontColorI} />
+          {
+            play ?
+
           <TouchableOpacity onPress={() => setPlay(false)}>
             <AntDesign name="pausecircleo" size={WindowHeight / 12} color={Colors.FontColorI} />
           </TouchableOpacity>
+          :
           <TouchableOpacity onPress={() => setPlay(true)}>
             <EvilIcons name="play" size={WindowHeight / 9} color={Colors.FontColorI} />
           </TouchableOpacity>
+          }
+
           <Ionicons 
           onPress={()=> ongetNextHeat()}
           name="play-forward-outline" size={WindowHeight / 9} color={Colors.FontColorI} />

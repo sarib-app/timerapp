@@ -12,6 +12,7 @@ import getAllHeatsData from '../../../Global/Calls/getHeat';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { convertSecondsToTime } from '../../../Global/Calls/ConvertToSEconds';
 import launchHeat from '../../../Global/Calls/ChangeLaunch';
+import removeHeatById from '../../../Global/Calls/deleteData';
 
 
 export default function Datalist() {
@@ -29,6 +30,11 @@ async function fetchHeats() {
   const allHeats = await getAllHeatsData();
   console.log(allHeats);
   setData(allHeats) // This will log all the heats data
+}
+
+async function onremoveItem(id){
+  await removeHeatById(id)
+  fetchHeats()
 }
 
 function Btn({clr,icon,onpress}){
@@ -57,6 +63,8 @@ function RenderItem({item}){
   
     }
   }
+
+ 
   return(
     <>
     {
@@ -81,7 +89,7 @@ style={{marginHorizontal:5}}
 <Btn
 clr={Colors.send}
 icon={"minus-a"}
-onpress={{}}
+onpress={() =>  onremoveItem(item.id)}
 
 />
 
@@ -115,7 +123,7 @@ onpress={()=> onlaunchHeat()}
      <Btn
      clr={Colors.send}
      icon={"minus-a"}
-     onpress={{}}
+     onpress={() =>  onremoveItem(item.id)}
      
      />
      

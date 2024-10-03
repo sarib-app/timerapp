@@ -88,6 +88,8 @@ flexDirection:'row'
       },
       BottomWrapper:{
         width:WindowWidth/1.09,
+        height:WindowHeight/10,
+        // backgroundColor:"red",
 
         alignItems:'flex-end',
 

@@ -17,7 +17,8 @@ import { getNextHeat } from '../../Global/Calls/getNextHeat';
 import { getPreviousHeat } from '../../Global/Calls/getPreviousHeatINdex';
 import lanesData from '../DataMOdules/DataList/Lanes';
 
-
+import Header_athletes from './Header_athletes';
+import LckerSLide from '../Modals/LockMOdal';
 export default function HomeScreen() {
   const navigation = useNavigation()
 const [locked,setlocked]=useState(true)
@@ -132,14 +133,17 @@ const focused = useIsFocused()
     <View style={HomeStyles.container}>
       {
         heatData_lanes &&
-    <View style={HomeStyles.Header}>
-<FlatList 
-data={heatData_lanes}
-renderItem={({item})=> <HeaderItems item={item}/>}
-horizontal
-showsHorizontalScrollIndicator={false}
+//     <View style={HomeStyles.Header}>
+// <FlatList 
+// data={heatData_lanes}
+// renderItem={({item})=> <HeaderItems item={item}/>}
+// horizontal
+// showsHorizontalScrollIndicator={false}
+// />
+//     </View>
+<Header_athletes
+heatData_lanes={heatData_lanes}
 />
-    </View>
       }
 
     <View style={{alignItems:'center'}}>
@@ -179,7 +183,6 @@ ongetPreviousHeat={()=>ongetPreviousHeat()}
   />
 }
 </>
-
 }
 
 </View>
@@ -223,7 +226,6 @@ ongetPreviousHeat={()=>ongetPreviousHeat()}
       </TouchableOpacity>
   }
  
-
 
 </View>
 
