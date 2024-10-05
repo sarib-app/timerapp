@@ -34,6 +34,8 @@ async function launchHeat(heatId) {
         // Save the updated heats data back to AsyncStorage
         await AsyncStorage.setItem('heats', JSON.stringify(heats));
         console.log('Heat launched successfully.');
+        await AsyncStorage.setItem('changings',"true")
+
     Alert.alert("Success","Heat Launched SUccessfully!")
 
 

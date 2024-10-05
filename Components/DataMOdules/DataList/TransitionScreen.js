@@ -64,7 +64,7 @@
 //   setData(res)
 // }
 // }
-// const renderItems = ({item}) => (
+// const RenderTransitions = ({item}) => (
 //   <View style={DataListStyle.SessionWrapper}>
 //   <Text style={DataListStyle.Sessiontxt}>
 //    Custom Video Option
@@ -164,7 +164,7 @@
 
 //     <FlatList 
 //     data={data}
-//     renderItem={renderItems}
+//     renderItem={RenderTransitions}
 //     />
 
 //     </View>
@@ -192,6 +192,7 @@ import { addOrUpdateTransition } from '../../../Global/Calls/addorUpdateTransiti
 import { getTimeSegmentsForTransition } from '../../../Global/Calls/getTransition';
 import LaunchButton from '../../../Global/components/LaunchButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { updateTransitionSegment } from '../../../Global/Calls/UpdateTransition';
 
 export default function TransitionScreen({ route }) {
   const [showMenu, setShowMenu] = useState(false);
@@ -284,18 +285,129 @@ console.log(result)
     }
   }
 
-  const renderItems = ({ item }) => (
+  const RenderTransitions = ({ item ,index}) => {
+
+    const [duration, setDuration] = useState(item.duration);
+    const [cueTime, setCueTime] = useState(item.cue_at);
+    const [video, setVideo] = useState(item.video_file);
+    
+    async function pickVideoFromGallery() {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+        allowsEditing: true,
+        quality: 1,
+      });
+  console.log(result)
+      if (!result.canceled) {
+
+        setEdited(true)
+
+        setVideo(result.assets[0].uri);
+      }
+    }
+  
+    // Function to record a video
+    async function recordVideo() {
+      let result = await ImagePicker.launchCameraAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+        allowsEditing: true,
+        quality: 1,
+      });
+      
+      if (!result.canceled) {
+        console.log(result.canceled)
+        setEdited(true)
+        setVideo(result.assets[0].uri);
+      }
+    }
+    // const [data]
+
+const [edited,setEdited]=useState(false)
+    async function updateTRansition() {
+      if(video && cueTime && duration){
+  
+      console.log(video)
+      const data = {
+        video_file: video,
+        cue_at: cueTime,
+        duration: duration,
+      };
+      const res = await updateTransitionSegment(trans_series,index, data);
+      if (res) {
+        setEdited(false)
+       
+      }
+    }
+  else{
+    Alert.alert("Error","PLease fill all information")
+  }
+    }
+    return(
     <View style={DataListStyle.SessionWrapper}>
-      <Text style={DataListStyle.Sessiontxt}>Custom Video</Text>
-      <View style={GlobalStyles.RowMaker}>
+      <Text style={DataListStyle.Sessiontxt}>Custom Video {index+1}</Text>
+      {/* <View style={GlobalStyles.RowMaker}>
         <Text style={DataListStyle.Sessiontxt}>Cue at</Text>
         <Text style={DataListStyle.Sessiontxt}>{convertSecondsToTime(item.cue_at)}</Text>
-      </View>
-      <Text style={DataListStyle.Sessiontxt}>{convertSecondsToTime(item.duration)}</Text>
-      <Text style={DataListStyle.Sessiontxt}>Video #000</Text>
+      </View> */}
+
+      <View style={GlobalStyles.RowMaker}>
+          <Text style={DataListStyle.Sessiontxt}>Cue at</Text>
+          <TextInput
+            value={cueTime}
+            placeholder="Add cue"
+            onChangeText={(e) => {setCueTime(e)
+
+        setEdited(true)
+
+            }}
+            placeholderTextColor={Colors.FontColorI}
+            style={[DataListStyle.Sessiontxt, { marginLeft: 5 }]}
+          />
+          <Text style={DataListStyle.Sessiontxt}>th sec</Text>
+
+        </View>
+      {/* <Text style={DataListStyle.Sessiontxt}>{convertSecondsToTime(item.duration)}</Text> */}
+      <View style={GlobalStyles.RowMaker}>
+          <Text style={DataListStyle.Sessiontxt}>Duration </Text>
+      <TextInput
+          value={duration}
+          placeholder="Add duration"
+          onChangeText={(e) => {
+          setDuration(e)
+          setEdited(true)
+          }}
+          placeholderTextColor={Colors.FontColorI}
+          style={[DataListStyle.Sessiontxt, { marginLeft: 5 }]}
+        />
+          <Text style={DataListStyle.Sessiontxt}> sec</Text>
+
+        </View>
+      <View style={GlobalStyles.RowMaker}>
+      <Text style={DataListStyle.Sessiontxt}>Video </Text>
+
+          {/* Upload video from gallery */}
+          <TouchableOpacity onPress={pickVideoFromGallery}>
+            <Entypo name="upload" size={WindowHeight / 28} color={Colors.lightTxt} />
+          </TouchableOpacity>
+
+          {/* Record video */}
+          <TouchableOpacity onPress={recordVideo}>
+            <Fontisto name="record" size={WindowHeight / 28} style={{ marginLeft: 10 }} color={Colors.danger} />
+          </TouchableOpacity>
+
+          {/* Submit the transition */}
+          {
+            edited &&
+          <TouchableOpacity onPress={updateTRansition}>
+            <AntDesign name="checkcircle" size={WindowHeight / 28} style={{ marginLeft: 10 }} color={Colors.send} />
+
+          </TouchableOpacity>
+          }
+
+        </View>
     </View>
   );
-
+  }
   return (
     <View style={DataListStyle.container}>
       <View style={DataListStyle.TitleWrapper}>
@@ -304,8 +416,8 @@ console.log(result)
         <LaunchButton OnPress={() => onLaunch()} />
       </View>
 
-      <View style={DataListStyle.SessionWrapper}>
-        <Text style={DataListStyle.Sessiontxt}>Custom Video</Text>
+      <View style={[DataListStyle.SessionWrapper,{backgroundColor:Colors.PrimaryColor}]}>
+        <Text style={DataListStyle.Sessiontxt}>Add Transition</Text>
         <View style={GlobalStyles.RowMaker}>
           <Text style={DataListStyle.Sessiontxt}>Cue at</Text>
           <TextInput
@@ -342,7 +454,13 @@ console.log(result)
         </View>
       </View>
 
-      <FlatList data={data} renderItem={renderItems} />
+      <FlatList data={data} renderItem={({item,index})=>
+<RenderTransitions
+item={item}
+index={index}
+/>
+
+      } />
     </View>
   );
 }

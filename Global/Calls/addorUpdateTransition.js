@@ -42,6 +42,7 @@ export async function addOrUpdateTransition(transitionSeries , timeSegmentData) 
 
         // Save the updated transitions back to AsyncStorage
         await AsyncStorage.setItem('heats', JSON.stringify(transitions));
+        await AsyncStorage.setItem('changings',"true")
 
         console.log('Transition added or updated successfully');
 

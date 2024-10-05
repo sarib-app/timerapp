@@ -234,8 +234,9 @@ export default function Controls_layout1({ locked, onPress, heatData ,ongetNextH
     setPreLoadCount(3);
     setTImesegment(d);
     setSequence(sequence_filtered);
+    
     setTimer(time);
-    setTimer_Saved(time);
+    setTimer_Saved(filteredSegment.duration);
 
     prepareSoundsQueue(filteredSegment.sounds, sequence_filtered);  // Prepare sounds queue based on cue_at
   }
@@ -253,13 +254,13 @@ export default function Controls_layout1({ locked, onPress, heatData ,ongetNextH
 
       // If the timer matches the next cue_at, play the sound
       if (sequence === 'up' && timer >= nextSound.cue_at) {
-        // playSound(nextSound.audio);
-        playSound(sample);
+        playSound(nextSound.audio);
+        // playSound(item.audio);
 
         setSoundQueue(soundQueue.slice(1));  // Remove the played sound from the queue
       } else if (sequence === 'down' && timer <= nextSound.cue_at) {
-        // playSound(nextSound.audio);
-        playSound(sample);
+        playSound(nextSound.audio);
+        // playSound(item.audio);
 
         setSoundQueue(soundQueue.slice(1));  // Remove the played sound from the queue
       }
@@ -272,8 +273,10 @@ export default function Controls_layout1({ locked, onPress, heatData ,ongetNextH
       if (audioRef.current) {
         await audioRef.current.unloadAsync();  // Unload the previous sound
       }
+      console.log("loading")
 
-      const { sound } = await Audio.Sound.createAsync({ audioFile });
+      const { sound } = await Audio.Sound.createAsync(  {uri:audioFile}  );
+      console.log("loaded",sound)
       audioRef.current = sound;
       await sound.playAsync();
     } catch (error) {
@@ -284,9 +287,9 @@ export default function Controls_layout1({ locked, onPress, heatData ,ongetNextH
   // Stop the sound when the component unmounts or timer changes
   useEffect(() => {
     return () => {
-      if (audioRef.current) {
-        audioRef.current.stopAsync();
-      }
+      // if (audioRef.current) {
+      //   audioRef.current.stopAsync();
+      // }
     };
   }, [timer]);
 
@@ -307,7 +310,7 @@ export default function Controls_layout1({ locked, onPress, heatData ,ongetNextH
           handleNextSegment();
         }
       } else {
-        if (timer >= timer_Saved.duration) {
+        if (timer >= timer_Saved && timer != 0) {
           handleNextSegment();
         }
       }
@@ -324,14 +327,19 @@ export default function Controls_layout1({ locked, onPress, heatData ,ongetNextH
           return () => clearInterval(intervalRef.current);
         }
       } else {
-        intervalRef.current = setInterval(() => {
-          setTimer(prevCount => prevCount + 1);
-        }, 1000);
-        return () => clearInterval(intervalRef.current);
+        // In the "up" sequence, stop the timer when it reaches the duration
+        if (timer <timer_Saved) {
+          intervalRef.current = setInterval(() => {
+            setTimer(prevCount => prevCount + 1);
+          }, 1000);
+          return () => clearInterval(intervalRef.current);
+        } else {
+          // handleNextSegment();  // Move to the next segment or heat if available
+        }
       }
     }
   };
-
+  
   function handleNextSegment() {
     clearInterval(intervalRef.current);
     setPlay(false);

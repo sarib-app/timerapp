@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { Alert, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, FlatList, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import HomeStyles from './HomeStyles';
 import Colors from '../../Global/Branding/colors';
 import { EvilIcons, Fontisto, Ionicons } from '@expo/vector-icons';
@@ -34,6 +34,10 @@ const focused = useIsFocused()
       useEffect(()=>{
 //  AsyncStorage.clear()
      async function getData(){
+
+      const edit= await AsyncStorage.getItem("changings")
+      if(edit && edit === "true"){
+
       const data = await getLaunchedHeat()
       if(data){
         setHeatData(data.heat)
@@ -47,13 +51,42 @@ const focused = useIsFocused()
 
           setShowVid(false)
         }
-        console.log(data)
+        await AsyncStorage.setItem('changings',"false")
       }
+    }
+
      }
      getData()
     //  AsyncStorage.clear()
 
       },[focused])
+
+      useEffect(()=>{
+//  AsyncStorage.clear()
+     async function getData(){
+
+      const data = await getLaunchedHeat()
+      if(data){
+        setHeatData(data.heat)
+        setCUrrentHeatINdex(data.index)
+        console.log(data)
+        if(data.heat.type === "transition"){
+        setShowVid(true)
+        }
+        else{
+        setHeatData_lanes(data.heat?.lanes)
+        setShowVid(false)
+        }
+        await AsyncStorage.setItem('changings',"false")
+      }
+    
+
+     }
+     getData()
+    //  AsyncStorage.clear()
+
+      },[])
+
 
 
       async function ongetNextHeat(){
@@ -129,6 +162,51 @@ const focused = useIsFocused()
             </TouchableOpacity>
         )
       }
+
+
+function Slider(){
+  return(<View style={{position:'absolute',bottom:WindowHeight/12,right:WindowHeight/10}}>
+    {
+      locked?
+        <SwipeButton
+                  Icon={
+                  <Fontisto name={locked ? "locked":"unlocked"} size={WindowHeight/22} color={Colors.Dark} style={{}} />
+                  }
+                  width={WindowWidth/4.5}
+                  height={WindowHeight/10}
+                  onComplete={() => setlocked(false)}
+                  title="Swipe to complete"
+                  
+                  borderRadius={1000}
+                  circleBackgroundColor={Colors.FontColorI}
+                  circleSize={WindowHeight/8}
+                  underlayContainerGradientProps={{
+                    colors: [Colors.BgColorII,Colors.BgColorII],
+                    start: [0, 0.5],
+                    end: [1.3, 0.5],
+                  }}
+                  titleStyle={{color:"white",fontSize:WindowHeight/40,marginLeft:50}}
+                        containerStyle={{ backgroundColor: Colors.BgColorII }}
+                  underlayTitle="Release to unlock"
+                  underlayTitleStyle={Colors.BgColorII }
+                />
+    :
+    <TouchableOpacity 
+    onPress={()=> setlocked(true)}
+    style={{padding:10,justifyContent:'center',alignItems:'center',backgroundColor:Colors.FontColorI,borderRadius:2000}}>
+    
+    <Fontisto name={locked ? "locked":"unlocked"} size={WindowHeight/22} color={Colors.Dark} style={{}} />
+    
+    
+    
+    </TouchableOpacity>
+    }
+    
+          </View>)
+}
+
+
+
   return (
     <View style={HomeStyles.container}>
       {
@@ -188,7 +266,7 @@ ongetPreviousHeat={()=>ongetPreviousHeat()}
 </View>
 
 <View style={HomeStyles.BottomWrapper}>
-  {
+  {/* {
     locked ?
     <View>
 
@@ -224,11 +302,28 @@ ongetPreviousHeat={()=>ongetPreviousHeat()}
       
       
       </TouchableOpacity>
-  }
+  } */}
  
 
 </View>
+{/* <Modal  visible= {true} transparent={false}>
+  <View style={{width:WindowWidth,height:WindowHeight,backgroundColor:'red'}}>
+
+  </View>
+</Modal> */}
+
+{
+  locked ?
+<View style={lockWrapper}>
+<Slider/>
+</View>:
+<Slider/>
+}
+
 
     </View>
   );
 }
+
+
+const lockWrapper={width:WindowWidth,height:WindowHeight,backgroundColor:"rgba(0,0,0,0.4)",position:'absolute'}

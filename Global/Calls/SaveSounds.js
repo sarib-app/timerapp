@@ -26,6 +26,8 @@ async function addSoundToTimeSegment(heatSeries, segmentIndex, soundData) {
 
         // Save the updated heats data back to AsyncStorage
         await AsyncStorage.setItem('heats', JSON.stringify(heats));
+        await AsyncStorage.setItem('changings',"true")
+
         console.log('Sound added to time segment successfully.');
 
         return true;
