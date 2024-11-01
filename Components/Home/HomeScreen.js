@@ -19,11 +19,14 @@ import lanesData from '../DataMOdules/DataList/Lanes';
 
 import Header_athletes from './Header_athletes';
 import LckerSLide from '../Modals/LockMOdal';
+import findHeatAfterTransition from '../../Global/Calls/FIndLanes';
 export default function HomeScreen() {
   const navigation = useNavigation()
 const [locked,setlocked]=useState(true)
 const [temp_play,setTempPlay]=useState(false)
 const [showVid,setShowVid]=useState(false)
+const [autoPlay,setautoPlay]=useState(false)
+
 const [heatData,setHeatData]=useState([])
 const [heatData_lanes,setHeatData_lanes]=useState([])
 
@@ -40,25 +43,28 @@ const focused = useIsFocused()
 
       const data = await getLaunchedHeat()
       if(data){
+        setHeatData([])
+
+        setautoPlay(false)
+        
         setHeatData(data.heat)
         setCUrrentHeatINdex(data.index)
-        console.log(data)
+        // console.log(data)
         if(data.heat.type === "transition"){
           setShowVid(true)
+          findLanes(data.heat.transition_series)
+
         }
         else{
-        setHeatData_lanes(data.heat?.lanes)
-
+          setHeatData_lanes(data.heat?.lanes)
           setShowVid(false)
         }
         await AsyncStorage.setItem('changings',"false")
       }
     }
-
      }
      getData()
     //  AsyncStorage.clear()
-
       },[focused])
 
       useEffect(()=>{
@@ -69,9 +75,11 @@ const focused = useIsFocused()
       if(data){
         setHeatData(data.heat)
         setCUrrentHeatINdex(data.index)
-        console.log(data)
+        // console.log(data)
         if(data.heat.type === "transition"){
         setShowVid(true)
+        findLanes(data.heat.transition_series)
+
         }
         else{
         setHeatData_lanes(data.heat?.lanes)
@@ -92,19 +100,21 @@ const focused = useIsFocused()
       async function ongetNextHeat(){
         const data = await getNextHeat(currentIndex)
       if(data){
+        setautoPlay(true)
         setHeatData([])
         setHeatData(data.heat)
         setCUrrentHeatINdex(data.index)
-
         if(data.heat.type === "transition"){
           setShowVid(true)
+          findLanes(data.heat.transition_series)
+
         }
         else{
         setHeatData_lanes(data.heat?.lanes)
 
           setShowVid(false)
         }
-        console.log(data)
+        // console.log(data)
       }
       else{
         Alert.alert("Sorry","No more/Transition heat found!")
@@ -112,23 +122,31 @@ const focused = useIsFocused()
       }
       async function ongetPreviousHeat(){
         const data = await getPreviousHeat(currentIndex)
-      if(data){
+        if(data){
+          setautoPlay(true)
         setHeatData([])
-
         setHeatData(data.heat)
         setCUrrentHeatINdex(data.index)
         if(data.heat.type === "transition"){
-          setShowVid(true)
+        setShowVid(true)
+        findLanes(data.heat.transition_series)
         }
         else{
         setHeatData_lanes(data.heat?.lanes)
-
-          setShowVid(false)
+        setShowVid(false)
         }
-        console.log(data)
-      }
+        // console.log(data)
+        }
       }
 
+
+      async function findLanes(t_id){
+const data = await findHeatAfterTransition(t_id)
+if(data){
+  setHeatData_lanes(data?.lanes)
+  // console.log("dsdssss",data?.lanes)
+}
+      }
 
       function HeaderItems  ({item}){
         const [seletion,setSelection]= useState(1)
@@ -250,6 +268,7 @@ heatData_lanes={heatData_lanes}
   heatData={heatData}
 ongetNextHeat={()=>ongetNextHeat()}
 ongetPreviousHeat={()=>ongetPreviousHeat()}
+autoPlay={autoPlay}
   /> 
 :
   <Controls_layout2
@@ -258,6 +277,8 @@ ongetPreviousHeat={()=>ongetPreviousHeat()}
   heatData={heatData}
   ongetNextHeat={()=>ongetNextHeat()}
   ongetPreviousHeat={()=>ongetPreviousHeat()}
+  autoPlay={autoPlay}
+
   />
 }
 </>

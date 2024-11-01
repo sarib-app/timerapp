@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import DataListStyle from './DataListStyles';
 import GlobalStyles from '../../../Global/Branding/GlobalStyles';
 import { WindowHeight, WindowWidth } from '../../../Global/components/Dimensions';
@@ -97,7 +97,9 @@ export default function LaneScreen({ route }) {
             if (existingHeatIndex !== -1) {
                 heats[existingHeatIndex].lanes = updatedLanes;
                 await AsyncStorage.setItem('heats', JSON.stringify(heats));
-                console.log('Lanes data updated successfully.');
+        await AsyncStorage.setItem('changings',"true")
+
+                Alert.alert('Success','Lanes data updated successfully.');
                 setLanes(updatedLanes);
                 setEditedLanes({});
             } else {

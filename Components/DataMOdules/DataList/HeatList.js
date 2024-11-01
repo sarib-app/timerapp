@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, FlatList, StyleSheet, Text, Touchable, TouchableOpacity, View } from 'react-native';
+import { Alert, FlatList, StyleSheet, Text, Touchable, TouchableOpacity, View ,Modal} from 'react-native';
 
 import DataListStyle from './DataListStyles';
 import GlobalStyles from '../../../Global/Branding/GlobalStyles';
@@ -23,12 +23,23 @@ import { Audio } from 'expo-av';
 import { Recording } from 'expo-av/build/Audio';
 import { startRecordingasync, stopRecordingasync, uploadAudioasync } from '../../../Global/REcordings/Recording_controller';
 import updateSoundInTimeSegment from '../../../Global/Calls/UpdateAudioData';
+import TimeSelectorModal from '../../Modals/TimerPIcker';
+import { convertSecondsToTime } from '../../../Global/Calls/ConvertToSEconds';
+import { deleteSoundFromTimeSegment } from '../../../Global/Calls/deleteSoundOBject';
+import { deleteTimeSegment } from '../../../Global/Calls/deleteTransition';
+import { delete_time_segment_index } from '../../../Global/Calls/deleteTime_segment';
+import { showDeleteConfirmationAlert } from '../../Modals/ShowDel';
+// import { Modal } from 'react-native-web';
 export default function HeatList({route}) {
   const { heatSeries } = route.params;
   const navigation = useNavigation()
 const [showMenu,setShowMenu]= useState(false)
 const [heatData,setHeatData] = useState([])
 const [sid,setSid]=useState(heatSeries)
+const [duration,setDuration]=useState(60)
+const [Newduration,setNewDuration]=useState(60)
+
+const [showTimeMOdal,setShowTimeMOdal]=useState(false)
 
 function onSaveSegment_record(val){
   setShowMenu(false)
@@ -48,6 +59,15 @@ saveHeatData(sid,val).then(heatSeries => {
 
 }
 
+
+async function onSowTimeMOdal(val){
+  await changeNewduration(val)
+  setShowTimeMOdal(true)
+}
+async function changeNewduration(val){
+
+  setNewDuration(val)
+}
 
 
 useEffect(()=>{
@@ -81,6 +101,17 @@ const [cue_at,setCue_at]=useState(10)
 const [recording, setRecording] = useState(null);
 const [audioPath, setAudioPath] = useState(null);
 const [isEdited,setIsEdited]=useState(false)
+const [showDUrationTImer,setSHowDurationTImer]=useState(false)
+const [show_CUeTimer,setShow_CueTimer]=useState(false)
+
+
+const [id,setId]=useState(item.id)
+const [duration,setduration]=useState(item.duration)
+const [showTimeMOdal,setShowTimeMOdal]=useState(false)
+
+const [play_sequence,setplay_sequence]=useState(item.play_sequence)
+const [preload,setpreload]=useState(item.preload)
+
 
  async function addSOund(){
   if(cue_at && audioPath){
@@ -130,6 +161,7 @@ setCue_at(10)
 
   function RenderSoundOPtions({item,audIdex}){
 
+    const [showTimeMOdal,setShowTimeMOdal]=useState(false)
 
     const [cue_at,setCue_at]=useState(item.cue_at)
 const [recording, setRecording] = useState(null);
@@ -178,6 +210,18 @@ const [isEdited,setIsEdited]=useState(false)
       }
 
 
+
+
+
+
+
+async function deleteSOund(){
+  await deleteSoundFromTimeSegment(sid,index,audIdex)
+  getHeatData(sid)
+
+}
+
+
     return(
       <View style={DataListStyle.SessionWrapper_Inner}>
 <Text style={DataListStyle.Sessiontxt_inner}>
@@ -186,14 +230,20 @@ const [isEdited,setIsEdited]=useState(false)
 
 <View style={GlobalStyles.RowMaker}>
 <Text style={DataListStyle.Sessiontxt_inner}>
-  CUE AT 
+  CUE AT
 </Text>
-<TextInput
+{/* <TextInput
   value={cue_at.toString()}
   onChangeText={(e)=> changeVal(e)}
   placeholder='Type Cue Seconds'
   style={[DataListStyle.Sessiontxt_inner,{marginLeft:5}]}
-  />
+  /> */}
+  <Text
+  style={[DataListStyle.Sessiontxt_inner,{marginLeft:5}]}
+  onPress={()=> setShowTimeMOdal(true)}
+  >
+{convertSecondsToTime(cue_at)}
+  </Text>
 </View>
 
 <Text style={[DataListStyle.Sessiontxt_inner,{color:"transparent"}]}>
@@ -221,6 +271,19 @@ const [isEdited,setIsEdited]=useState(false)
         >
           <Fontisto name={recording? "pause":"record"} size={WindowHeight/32} color={recording ? Colors.danger : Colors.lightTxt} />
         </TouchableOpacity>
+
+
+        <TouchableOpacity
+onPress={()=> 
+  // deleteSOund()
+  showDeleteConfirmationAlert("this transition",deleteSOund,"null")
+}
+>
+
+<AntDesign name="minuscircle" size={WindowHeight/32} style={{marginLeft:10}}color={Colors.danger} />
+</TouchableOpacity>
+
+
         {
           isEdited &&
           <TouchableOpacity
@@ -236,6 +299,19 @@ onPress={()=> updateSound()}
 {/* <Entypo name="upload" size={WindowHeight/24} color={Colors.lightTxt} />
 <Fontisto name="record" size={WindowHeight/24} style={{marginLeft:10}}color={Colors.danger} /> */}
 </View>
+{
+  showTimeMOdal && 
+  <TimeSelectorModal
+  showTimeMOdal={showTimeMOdal}
+  onClose={()=>setShowTimeMOdal(false)}
+  onTimeSelected={(e)=>{
+    setShowTimeMOdal(false)
+setCue_at(e)
+setIsEdited(true)
+  }}
+  duration={cue_at}
+  />
+}
 
     </View>
     )
@@ -256,11 +332,6 @@ await updateSegmentInHeatByIndex(heatSeries, index, updatedSegmentData);
 
 Alert.alert("Success","Ipdated successfully")
 }
-const [id,setId]=useState(item.id)
-const [duration,setduration]=useState(item.duration)
-
-const [play_sequence,setplay_sequence]=useState(item.play_sequence)
-const [preload,setpreload]=useState(item.preload)
 
 
 const flexed={
@@ -271,6 +342,27 @@ function changeVal(val){
   setCue_at(val)
   setIsEdited(true)
 }
+
+async function ondeleteTimeSegment(){
+  await delete_time_segment_index(sid,index)
+  getHeatData(sid)
+}
+
+function setTimer(e){
+  setShowTimeMOdal(false)
+  if(showDUrationTImer){
+    setduration(e)
+    setSHowDurationTImer(false)
+
+  }
+  else{
+    setCue_at(e)
+    setShow_CueTimer(e)
+    setIsEdited(true)
+  }
+}
+
+
   return(
     <View style={DataListStyle.SessionWrapper_parent}>
 
@@ -279,14 +371,22 @@ function changeVal(val){
   Time Segment {id}
 </Text>
 
-<TextInput
+{/* <TextInput
 value= {duration.toString()}
 keyboardType='numeric'
 placeholder='add value'
 placeholderTextColor={"white"}
 onChangeText={(e)=> setduration(e)}
 style={[DataListStyle.Sessiontxt,flexed]}
-/>
+/> */}
+<Text
+style={[DataListStyle.Sessiontxt]}
+onPress={()=> {
+  setSHowDurationTImer(true)
+  setShowTimeMOdal(true)}}
+>
+  {convertSecondsToTime(duration)}
+</Text>
 
 
 <TouchableOpacity
@@ -307,6 +407,18 @@ onPress={()=> setpreload((p)=>!p)}
 </Text>
 </TouchableOpacity>
 <TouchableOpacity
+onPress={()=>
+  //  ondeleteTimeSegment()
+   showDeleteConfirmationAlert("this transition",ondeleteTimeSegment,"null")
+
+
+
+}
+>
+
+<AntDesign name="minuscircle" size={WindowHeight/32} style={{marginLeft:10}}color={Colors.danger} />
+</TouchableOpacity>
+<TouchableOpacity
 onPress={()=> updateSegment()}
 >
 
@@ -318,17 +430,27 @@ onPress={()=> updateSegment()}
 <Text style={DataListStyle.Sessiontxt_inner}>
   Add cue audio
 </Text>
-<View style={GlobalStyles.RowMaker}>
+<TouchableOpacity style={GlobalStyles.RowMaker}>
 <Text style={DataListStyle.Sessiontxt_inner}>
   CUE AT 
 </Text>
-<TextInput
+{/* <TextInput
   value={cue_at.toString()}
   onChangeText={(e)=> changeVal(e)}
   placeholder='Type Cue Seconds'
   style={[DataListStyle.Sessiontxt_inner,{marginLeft:5}]}
-  />
-</View>
+  /> */}
+  <Text
+onPress={()=>{
+  setShowTimeMOdal(true)
+  setShow_CueTimer(true)
+}}
+    style={[DataListStyle.Sessiontxt_inner,{marginLeft:5}]}
+
+  >
+    {convertSecondsToTime(cue_at)}
+  </Text>
+</TouchableOpacity>
 
 <Text style={[DataListStyle.Sessiontxt_inner,{color:"transparent"}]}>
   N/A
@@ -371,6 +493,18 @@ renderItem={({item,index})=>{
   )
 }}
 />
+{
+  showTimeMOdal && 
+  <TimeSelectorModal
+  showTimeMOdal={showTimeMOdal}
+  onClose={()=>setShowTimeMOdal(false)}
+  onTimeSelected={(e)=>{
+    setTimer(e)
+  }}
+  duration={showDUrationTImer? duration:cue_at}
+  />
+}
+
 
 
     
@@ -402,12 +536,16 @@ return(
 </View>
 )
 }
+
 function onOpenMENU(){
   setShowMenu((p)=> !p)
 }
+
 function onSaveSegment(){
   setShowMenu(false)
 }
+
+
 
   return (
     <View style={DataListStyle.container}>
@@ -452,13 +590,43 @@ renderItem={({item,index})=>{
   )
 }}
 />
+
 {
   showMenu && 
 <AddHeatSegments 
-
 onPress={(e)=>onSaveSegment_record(e)}
+onPressDuration={()=> onSowTimeMOdal(duration)}
+duration={duration}
+data={heatData}
 />
 }
+
+
+{
+  showTimeMOdal && 
+  <TimeSelectorModal
+  showTimeMOdal={showTimeMOdal}
+  onClose={()=>setShowTimeMOdal(false)}
+  onTimeSelected={(e)=>{
+   setShowTimeMOdal(false)
+   setDuration(e)
+  }}
+  duration={Newduration}
+  />
+}
+{/* <Modal
+visible={true}
+transparent={false}
+animationType='slide'
+supportedOrientations={['landscape', 'landscape-left', 'landscape-right']}
+statusBarTranslucent={true}
+>
+  <View style={{width:WindowWidth,height:WindowHeight,backgroundColor:'yellow'}}>
+
+  </View>
+
+</Modal> */}
+
 
     </View>
   );

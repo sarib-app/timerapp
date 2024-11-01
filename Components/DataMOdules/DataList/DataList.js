@@ -13,6 +13,7 @@ import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { convertSecondsToTime } from '../../../Global/Calls/ConvertToSEconds';
 import launchHeat from '../../../Global/Calls/ChangeLaunch';
 import removeHeatById from '../../../Global/Calls/deleteData';
+import { showDeleteConfirmationAlert } from '../../Modals/ShowDel';
 
 
 export default function Datalist() {
@@ -89,7 +90,11 @@ style={{marginHorizontal:5}}
 <Btn
 clr={Colors.send}
 icon={"minus-a"}
-onpress={() =>  onremoveItem(item.id)}
+onpress={() =>  
+    showDeleteConfirmationAlert("this Heat",onremoveItem,item.id)
+  // onremoveItem(item.id)
+
+}
 
 />
 
@@ -123,7 +128,8 @@ onpress={()=> onlaunchHeat()}
      <Btn
      clr={Colors.send}
      icon={"minus-a"}
-     onpress={() =>  onremoveItem(item.id)}
+     onpress={() =>      showDeleteConfirmationAlert("this transition",onremoveItem,item.id)
+     }
      
      />
      

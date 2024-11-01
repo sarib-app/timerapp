@@ -59,4 +59,8 @@ const datatransition = [
         ]
     }
 ]
+
+
+
+
 export {dataSAmple}

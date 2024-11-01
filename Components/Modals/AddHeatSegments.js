@@ -10,14 +10,14 @@ import { AntDesign } from "@expo/vector-icons";
 import GlobalStyles from "../../Global/Branding/GlobalStyles";
 import { TextInput } from "react-native-gesture-handler";
 import { convertSecondsToTime } from "../../Global/Calls/ConvertToSEconds";
-function AddHeatSegments({onPress}){
+import TimeSelectorModal from "./TimerPIcker";
+function AddHeatSegments({onPress,onPressDuration,duration,data}){
 const naivgation = useNavigation()
-const [isEnabled, setIsEnabled] = useState  
-(false);
+const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () =>{
     setIsEnabled(previousState => !previousState);}
       // const [duration,setDUration]=useState(60)
-      const [duration,setDuration] = useState(60)
+      // const [duration,setDuration] = useState(60)
       const [Count_opt,setCount_opt] = useState("down")
 
       
@@ -26,7 +26,7 @@ const [isEnabled, setIsEnabled] = useState
       if(duration){
         const segment = {
           duration: Number(duration), // duration in seconds
-          play_sequence: 'down',
+          play_sequence: Count_opt,
           preload: isEnabled, // true or false
           sounds: [] 
         }
@@ -56,18 +56,22 @@ const [isEnabled, setIsEnabled] = useState
         <Text style={HeatStyles.TextStyles_heat}>
           Duration
         </Text>
-        <TextInput
+        {/* <TextInput
         value={duration.toString()}
         onChangeText={(e)=> setDuration(e)}
         placeholder="Type"
         keyboardType="numeric"
 
         style={[HeatStyles.TextStyles_heat,{width:WindowWidth/10,paddingVertical:WindowWidth/60}]}
-        />
-        <Text style={HeatStyles.TextStyles_heat}>
+        /> */}
+        <Text 
+        onPress={()=> onPressDuration()}
+        style={HeatStyles.TextStyles_heat}>
           {convertSecondsToTime(Number(duration))}
         </Text>
         </View>
+        {
+          data.length < 1 &&
         <View style={HeatStyles.TextWrapper_heat}>
         
         <Text style={HeatStyles.TextStyles_heat}>
@@ -83,6 +87,7 @@ const [isEnabled, setIsEnabled] = useState
       />
         </View>
         
+      }
         <View style={HeatStyles.TextWrapper_heat}>
         
         <Text style={HeatStyles.TextStyles_heat}>
@@ -122,6 +127,10 @@ const [isEnabled, setIsEnabled] = useState
         style={[HeatStyles.TextStyles_heat,{marginTop:WindowHeight/35}]}>
           Make Segment
         </Text>
+        {/* <TimeSelectorModal
+        onClose={{}}
+        onTimeSelected={{}}
+        /> */}
         </View>
         // </Modal>
     )
