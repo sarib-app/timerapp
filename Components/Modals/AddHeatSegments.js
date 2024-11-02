@@ -70,7 +70,7 @@ const [isEnabled, setIsEnabled] = useState(false);
           {convertSecondsToTime(Number(duration))}
         </Text>
         </View>
-        {
+        {/* {
           data.length < 1 &&
         <View style={HeatStyles.TextWrapper_heat}>
         
@@ -87,7 +87,7 @@ const [isEnabled, setIsEnabled] = useState(false);
       />
         </View>
         
-      }
+      } */}
         <View style={HeatStyles.TextWrapper_heat}>
         
         <Text style={HeatStyles.TextStyles_heat}>

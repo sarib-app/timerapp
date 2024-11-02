@@ -509,12 +509,16 @@ else if(val != 0){
 
       
  
-        <Text style={[HomeStyles.TimeBig,{fontSize:WindowWidth/70}]}>{"ciurrent segment:"+ currentSegmentIndex + 1}</Text>
+        <Text style={[HomeStyles.TimeBig,{fontSize:WindowWidth/70}]}>{"current segment:"+ Number(currentSegmentIndex+1)}</Text>
       {!locked && (
-        <View style={HomeStyles.TimeWrapper}>
+        <View style={[HomeStyles.TimeWrapper,{justifyContent:!playPretimer_state && !preLoad ? "space-between":"center"}]}>
+           {
+            !playPretimer_state && !preLoad &&
+
           <Ionicons 
             onPress={handlePrevSegment}
             name="play-back-outline" size={WindowHeight / 9} color={Colors.FontColorI} />
+           }
           
           {play || preLoad || playPretime? 
             <TouchableOpacity onPress={() => {
@@ -528,8 +532,12 @@ else if(val != 0){
               <EvilIcons name="play" size={WindowHeight / 9} color={Colors.FontColorI} />
             </TouchableOpacity>
           }
+          {
+            !playPretimer_state && !preLoad &&
 
           <Ionicons onPress={handleNextSegment} name="play-forward-outline" size={WindowHeight / 9} color={Colors.FontColorI} />
+        }
+
         </View>
       )}
     </>
