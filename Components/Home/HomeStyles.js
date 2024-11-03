@@ -81,7 +81,7 @@ flexDirection:'row'
       },
       TimeWrapper:{
         width:WindowWidth/2.8,
-        justifyContent:'center',
+        justifyContent:'space-between',
         flexDirection:'row',
         alignItems:'center',
         // backgroundColor:"yellow"

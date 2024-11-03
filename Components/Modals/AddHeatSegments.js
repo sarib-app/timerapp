@@ -73,7 +73,6 @@ const [isEnabled, setIsEnabled] = useState(false);
         {/* {
           data.length < 1 &&
         <View style={HeatStyles.TextWrapper_heat}>
-        
         <Text style={HeatStyles.TextStyles_heat}>
         Preloaded Sound Option
         </Text>
@@ -82,11 +81,9 @@ const [isEnabled, setIsEnabled] = useState(false);
         thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
         ios_backgroundColor="#3e3e3e"
         onValueChange={toggleSwitch}
-        
         value={isEnabled}
       />
         </View>
-        
       } */}
         <View style={HeatStyles.TextWrapper_heat}>
         
@@ -103,24 +100,16 @@ const [isEnabled, setIsEnabled] = useState(false);
       
 
         <AntDesign name={Count_opt === "down"?"checkcircle": "checkcircleo"} size={WindowHeight/30} style={{marginLeft:5}}color={Colors.FontColorI} />
-      
-
+        
         </TouchableOpacity>
         <TouchableOpacity 
-      
         onPress={()=> setCount_opt("up")}
-        
-
         style={GlobalStyles.RowMaker}>
         <Text style={HeatStyles.TextStyles_heat}>
           Up
         </Text>
-      
         <AntDesign name={Count_opt === "down"?"checkcircleo": "checkcircle"} size={WindowHeight/30} style={{marginLeft:5}}color={Colors.FontColorI} />
         </TouchableOpacity>
-  
-
-
         </View>
         <Text
         onPress={()=> sendData()}

@@ -208,8 +208,9 @@ export default function Controls_layout1({ locked, onPress, heatData ,ongetNextH
   const [timer_Saved, setTimer_Saved] = useState(0);
   const [timeSegment,setTImesegment]=useState([])
   const [preloadCOunt,setPreLoadCount]=useState(3);
-  const [preTimer,setPreTimer] = useState(5)
+  const [preTimer,setPreTimer] = useState(10)
   const [playPretime,setPlayPreTime]=useState(false)
+  const [Pso_Played,setPso_played]=useState(false)
   const [preLoad,setPreload]=useState(false);
   const [playPreLOad,setPlayProload]=useState(false);
   const [playPretimer_state,setPlay_preTimer_state]=useState(true);
@@ -235,7 +236,7 @@ export default function Controls_layout1({ locked, onPress, heatData ,ongetNextH
     const sequence_filtered = await filteredSegment?.play_sequence;
     const time = await sequence_filtered === "down" ? filteredSegment.duration : 0;
     const preLoad_val = await filteredSegment?.preload;
-    setPreload(preLoad_val);
+    setPreload(Pso_Played?preLoad: preLoad_val);
     setPreLoadCount(3);
     setTImesegment(d);
     setSequence(sequence_filtered);
@@ -246,19 +247,20 @@ export default function Controls_layout1({ locked, onPress, heatData ,ongetNextH
   }
 
 //////
-async function SetPLayer(val){
-
-  console.log("should auto play!",val,autoPlay)
-
-  if(autoPlay === true){
-// console.log(val,"play now")
-  const timer = setTimeout(() => {
+    async function SetPLayer(val,preLOad){
+    console.log("should auto play!",val,autoPlay)
+    if(autoPlay === true){
+//  console.log(val,"play now")
+    const timer = setTimeout(() => {
     if(val === 0 && playPretimer_state){
-      setPlayPreTime(true)
-      // setPlay_preTimer_state(true)
-    }else{
-
-      setPlay(true);
+    setPlayPreTime(true)
+    // setPlay_preTimer_state(true)
+    }
+    else if (!playPretimer_state && preLOad){
+    setPlayProload(true)
+    }
+    else{
+    setPlay(true);
     }
   }, 1000); // 1 second
 
@@ -440,8 +442,9 @@ else if(val != 0){
     if (playPreLOad) {
       if (preloadCOunt <= 0) {
         setPreload(false);
-        setPlay(true);
         setPlayProload(false);
+        setPso_played(true)
+        setPlay(true);
       }
     }
   }, [preloadCOunt]);
@@ -476,7 +479,12 @@ else if(val != 0){
         // setPreload(false);
         setPlay_preTimer_state(false)
         setPlayPreTime(false);
-        setPlay(true);
+        if(preLoad){
+          setPlayProload(true)
+        }else{
+
+          setPlay(true);
+        }
       }else if(preTimer === 3){
         playLocalSound(prelaod_sound)
       }
@@ -520,7 +528,7 @@ else if(val != 0){
             name="play-back-outline" size={WindowHeight / 9} color={Colors.FontColorI} />
            }
           
-          {play || preLoad || playPretime? 
+          {play || playPreLOad || playPretime? 
             <TouchableOpacity onPress={() => {
               playPretimer_state?setPlayPreTime(false): preLoad === true ? setPlayProload(false) : setPlay(false) }
               }
