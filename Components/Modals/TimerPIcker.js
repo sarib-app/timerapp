@@ -205,19 +205,25 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 20,
     borderRadius: 10,
-    width: 300,
+    // width: 300,
+    width:WindowWidth/2.5,
+    height:WindowWidth/2.5,
     alignSelf: 'center',
+    alignItems:'center',
+    justifyContent:'center'
   },
   title: {
-    fontSize: 18,
+    fontSize: WindowHeight/28,
     marginBottom: 10,
     textAlign: 'center',
   },
   timePickerContainer: {
     flexDirection: 'row',
     height:WindowHeight/2.8,
+    width:WindowWidth/2.8,
     justifyContent: 'space-between',
     marginBottom: 20,
+    alignItems:'center'
   },
   item: {
     // padding: WindowHeight,
@@ -233,15 +239,17 @@ const styles = StyleSheet.create({
     margin:WindowHeight/50
   },
   itemText: {
-    fontSize: 18,
+    fontSize: WindowHeight/28,
     textAlign: 'center',
+    color:Colors.Dark
   },
   cancelButton: {
-    marginTop: 10,
+    marginTop: WindowHeight/28,
   },
   cancelText: {
     color: 'red',
     textAlign: 'center',
+    fontSize:WindowHeight/28
   },
 });
 

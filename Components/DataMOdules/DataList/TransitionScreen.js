@@ -492,7 +492,7 @@ const [edited,setEdited]=useState(false)
             <Fontisto name="record" size={WindowHeight / 28} style={{ marginLeft: 10 }} color={Colors.deposit} />
           </TouchableOpacity>
           <TouchableOpacity onPress={()=>deleteTransition(index)}>
-            <AntDesign name="circle" size={WindowHeight / 28} style={{ marginLeft: 10 }} color={Colors.danger} />
+            <AntDesign name="minuscircle" size={WindowHeight / 28} style={{ marginLeft: 10 }} color={Colors.danger} />
 
           </TouchableOpacity>
           {/* Submit the transition */}

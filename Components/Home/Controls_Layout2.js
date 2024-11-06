@@ -311,6 +311,235 @@
 
 
 
+// import React, { useState, useRef, useEffect } from 'react';
+// import { Image, Text, TouchableOpacity, View } from 'react-native';
+// import HomeStyles from './HomeStyles';
+// import Colors from '../../Global/Branding/colors';
+// import { AntDesign, EvilIcons, Ionicons } from '@expo/vector-icons';
+// import { WindowHeight } from '../../Global/components/Dimensions';
+// import { convertSecondsToTime } from '../../Global/Calls/ConvertToSEconds';
+// import { useVideoPlayer, VideoView } from 'expo-video';
+// import { ResizeMode, Video } from 'expo-av';
+
+// const videoSource = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
+
+// export default function Controls_layout2({ locked, onPress, heatData, ongetNextHeat, ongetPreviousHeat ,autoPlay}) {
+//   const ref = useRef(null);
+
+//   const [data, setData] = useState(heatData);
+//   const [currentSegmentIndex, setCurrentSegmentIndex] = useState(0);
+//   const [timer, setTimer] = useState(0);
+//   const [timer_Saved, setTimer_Saved] = useState(0);
+//   const [timeSegment, setTimeSegment] = useState([]);
+//   const [finalsegment,setFInalSegment]=useState(null)
+//   const [play, setPlay] = useState(false);
+//   const [showVid, setSHowVid] = useState(false);
+//   const [vidd,setVid]=useState("")
+  
+
+//   const intervalRef = useRef(null);
+
+//   useEffect(() => {
+//     setTimerInitial(currentSegmentIndex);
+
+//   }, [heatData]);
+
+
+//   const ul = "file:///var/mobile/Containers/Data/Application/D8AF866E-A493-4AC6-86C0-9E7C0D98F9DF/Library/Caches/ExponentExperienceData/@saribkhan/battleground/ImagePicker/29437DCA-EC56-493D-8FAF-4F67E89C3D0F.mov"
+//   async function setTimerInitial(currentSegmentIndex) {
+//     const i = Number(currentSegmentIndex);
+//     const d = await heatData?.time_segments;
+//     const filtereSegment = await d[i];
+//     const time = await filtereSegment.duration;
+//     setTimeSegment(d);
+//     setFInalSegment(filtereSegment)
+//     // setTimer(time);
+//     // setTimer_Saved(time);
+//     SetPLayer(heatData.launched)
+//   }
+
+
+//   async function SetPLayer(val){
+//     console.log(val)
+//     if(autoPlay=== true){
+//   console.log(val,"play now")
+//     const timer = setTimeout(() => {
+//       setPlay(true);
+//     }, 1000); // 1 second
+  
+//     return () => clearTimeout(timer);
+//   }
+    
+//   }
+  
+//   // const player = useVideoPlayer(ul, player => {
+//   //   player.loop = true;
+//   //   player.play();
+//   // });
+//   // console.log(finalsegment?.video_file)
+
+//   useEffect(() => {
+//     if (play) {
+//       startTimer();
+//     } else {
+//       clearInterval(intervalRef.current);
+//     }
+//     return () => clearInterval(intervalRef.current); // Cleanup on unmount
+//   }, [play]);
+
+//   useEffect(() => {
+//   async function handleCHanigngs(){
+//     if (timer !== undefined) {
+//       if (timer >= heatData.total_duration) {
+//         handleNextSegment();
+//       }
+//       else{
+//      const vid = heatData?.time_segments?.filter((item)=> item.cue_at == timer)   
+//      console.log(vid ?"thats the vcid" +vid : null)  
+//      const url = await vid[0]?.video_file
+//     await settingVIdeoTopLPlay(url)
+//      console.log(url)
+//      setSHowVid(url?true:showVid)
+//       }
+     
+//     }
+//   }
+//   handleCHanigngs()
+//   }, [timer]);
+//   async function settingVIdeoTopLPlay(url){
+//     setVid(url? url :vidd)
+
+//   }
+
+//   const startTimer = () => {
+//     if (play && timer < heatData.total_duration) {
+//       intervalRef.current = setInterval(() => {
+//         setTimer(prevCount => prevCount + 1);
+//       }, 1000);
+//       return () => clearInterval(intervalRef.current);
+//     }
+//   };
+
+//   function handleNextSegment() {
+//     clearInterval(intervalRef.current);
+//     setPlay(false);
+  
+//       console.log("call next heat from 2 ");
+//       ongetNextHeat();
+//     setSHowVid(false)
+
+    
+//   }
+
+//   // useEffect(() => {
+//   //   const subscription = player.addListener('playingChange', isPlaying => {
+//   //     setPlay(isPlaying);
+//   //   });
+//   //   return () => {
+//   //     subscription.remove();
+//   //   };
+//   // }, [player]);
+// console.log(showVid)
+//   return (
+//     <View style={HomeStyles.control_two}>
+//       {/* <VideoView
+//         ref={ref}
+//         style={HomeStyles.Image_wrapper}
+//         player={player}
+        
+//         allowsFullscreen
+//         allowsPictureInPicture
+//       /> */}
+
+      
+//       {
+//         finalsegment &&
+//         <>
+//         {
+//           showVid ? 
+//        <Video
+//         ref={ref}
+//         style={HomeStyles.Image_wrapper}
+//         source={{
+//           uri: vidd,
+//         }}
+//         useNativeControls
+        
+//       shouldPlay={play}
+//         resizeMode={ResizeMode.CONTAIN}
+//         isLooping={false}
+        
+//         onPlaybackStatusUpdate={status => {
+//           console.log(status)
+//          if(status.didJustFinish === true){
+//           setSHowVid(false)
+//           setVid(null)
+//          }
+
+//         }}
+//       />
+//       :
+//       <View style={{alignItems:"center"}}>
+
+//       <Video
+//       ref={ref}
+//       style={HomeStyles.Image_wrapper}
+//       source={{
+//         uri: "",
+//       }}
+//       useNativeControls
+//     shouldPlay={play}
+//       resizeMode={ResizeMode.CONTAIN}
+//       isLooping
+//       // onPlaybackStatusUpdate={status => {
+//       //   console.log(status)
+//       //  if(status.isPlaying){
+//       //   setPlay(true)
+//       //  }else{
+//       //   setPlay(false)
+//       //  }
+
+//       // }}
+  
+//     />
+//                 <Text style={[HomeStyles.MainTitle, { fontSize: WindowHeight / 22 }]}>Video will be played at {convertSecondsToTime(finalsegment?.cue_at)}</Text>
+
+//       </View>
+// }
+//         </>
+ 
+//     }
+    
+//       <View style={HomeStyles.Image_wrapper}>
+//         <Text style={[HomeStyles.MainTitle, { fontSize: WindowHeight / 12 }]}>NEXT HEAT IN</Text>
+//         <Text style={HomeStyles.Time_small}>{convertSecondsToTime(timer)}</Text>
+//         <View style={HomeStyles.TimeWrapper}>
+//           <Ionicons 
+//           onPress={()=> ongetPreviousHeat()}
+          
+//           name="play-back-outline" size={WindowHeight / 9} color={Colors.FontColorI} />
+//           {
+//             play ?
+
+//           <TouchableOpacity onPress={() => setPlay(false)}>
+//             <AntDesign name="pausecircleo" size={WindowHeight / 12} color={Colors.FontColorI} />
+//           </TouchableOpacity>
+//           :
+//           <TouchableOpacity onPress={() => setPlay(true)}>
+//             <EvilIcons name="play" size={WindowHeight / 9} color={Colors.FontColorI} />
+//           </TouchableOpacity>
+//           }
+
+//           <Ionicons 
+//           onPress={()=> ongetNextHeat()}
+//           name="play-forward-outline" size={WindowHeight / 9} color={Colors.FontColorI} />
+//         </View>
+//       </View>
+//     </View>
+//   );
+// }
+
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import HomeStyles from './HomeStyles';
@@ -328,7 +557,7 @@ export default function Controls_layout2({ locked, onPress, heatData, ongetNextH
 
   const [data, setData] = useState(heatData);
   const [currentSegmentIndex, setCurrentSegmentIndex] = useState(0);
-  const [timer, setTimer] = useState(0);
+  const [timer, setTimer] = useState(1);
   const [timer_Saved, setTimer_Saved] = useState(0);
   const [timeSegment, setTimeSegment] = useState([]);
   const [finalsegment,setFInalSegment]=useState(null)
@@ -353,8 +582,8 @@ export default function Controls_layout2({ locked, onPress, heatData, ongetNextH
     const time = await filtereSegment.duration;
     setTimeSegment(d);
     setFInalSegment(filtereSegment)
-    // setTimer(time);
-    // setTimer_Saved(time);
+    setTimer(time);
+    setTimer_Saved(time);
     SetPLayer(heatData.launched)
   }
 
@@ -390,7 +619,7 @@ export default function Controls_layout2({ locked, onPress, heatData, ongetNextH
   useEffect(() => {
   async function handleCHanigngs(){
     if (timer !== undefined) {
-      if (timer >= heatData.total_duration) {
+      if (timer <= 0 ) {
         handleNextSegment();
       }
       else{
@@ -412,9 +641,9 @@ export default function Controls_layout2({ locked, onPress, heatData, ongetNextH
   }
 
   const startTimer = () => {
-    if (play && timer < heatData.total_duration) {
+    if (play && timer > 0) {
       intervalRef.current = setInterval(() => {
-        setTimer(prevCount => prevCount + 1);
+        setTimer(prevCount => prevCount - 1);
       }, 1000);
       return () => clearInterval(intervalRef.current);
     }

@@ -57,7 +57,7 @@ backgroundColor:"black"
   },
   video: {
     width: width/1.2,
-    height: height * 0.8,  // Adjust to take most of the screen
+    height: height/1.8  // Adjust to take most of the screen
   },
 });
 

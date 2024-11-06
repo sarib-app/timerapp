@@ -399,13 +399,13 @@ onPress={()=> setplay_sequence(play_sequence === "down"?"up":"down")}
 </TouchableOpacity>
 
 
-<TouchableOpacity
+{/* <TouchableOpacity
 onPress={()=> setpreload((p)=>!p)}
 >
 <Text style={DataListStyle.Sessiontxt}>
   {preload === false? "NO":"YES"}
 </Text>
-</TouchableOpacity>
+</TouchableOpacity> */}
 <TouchableOpacity
 onPress={()=>
   //  ondeleteTimeSegment()
@@ -526,8 +526,11 @@ return(
 <Text style={DataListStyle.Session_heading_txt}>
   Count
 </Text>
-<Text style={DataListStyle.Session_heading_txt}>
+{/* <Text style={DataListStyle.Session_heading_txt}>
   PSO
+</Text> */}
+<Text style={DataListStyle.Session_heading_txt}>
+  Remove
 </Text>
 <Text style={DataListStyle.Session_heading_txt}>
   Save
