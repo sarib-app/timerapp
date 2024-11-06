@@ -29,6 +29,7 @@ import { deleteSoundFromTimeSegment } from '../../../Global/Calls/deleteSoundOBj
 import { deleteTimeSegment } from '../../../Global/Calls/deleteTransition';
 import { delete_time_segment_index } from '../../../Global/Calls/deleteTime_segment';
 import { showDeleteConfirmationAlert } from '../../Modals/ShowDel';
+import saveAudioToAppStorage from '../../../Global/Calls/SaveAudio_storage';
 // import { Modal } from 'react-native-web';
 export default function HeatList({route}) {
   const { heatSeries } = route.params;
@@ -142,20 +143,30 @@ setCue_at(10)
 
   const uploadAudio = async () => {
     const res = await uploadAudioasync()
-    setAudioPath(res);
+    if (!res) {
+      return
+    }
+    const uri = await saveAudioToAppStorage(res)
+    
+    setAudioPath(uri);
+    setRecording(null);
+    setIsEdited(true)
   };
   // Function to start recording audio
   const startRecording = async () => {
    const res = await startRecordingasync()
+
    setRecording(res);
 
   };
   // Function to stop recording audio
   const stopRecording = async () => {
     const res = await stopRecordingasync(recording)
+
+    const uri = await saveAudioToAppStorage(res)
     setRecording(null);
     setIsEdited(true)
-    setAudioPath(res);
+    setAudioPath(uri);
   };
 
 
@@ -169,7 +180,14 @@ const [audioPath, setAudioPath] = useState(item.audio);
 const [isEdited,setIsEdited]=useState(false)
     const uploadAudio = async () => {
       const res = await uploadAudioasync()
-      setAudioPath(res);
+      // setAudioPath(res);
+      if (!res) {
+        return
+      }
+      const uri = await saveAudioToAppStorage(res)
+      setAudioPath(uri);
+      setRecording(null);
+      setIsEdited(true)
     };
     // Function to start recording audio
     const startRecording = async () => {
@@ -180,8 +198,9 @@ const [isEdited,setIsEdited]=useState(false)
     // Function to stop recording audio
     const stopRecording = async () => {
       const res = await stopRecordingasync(recording)
+      const uri = await saveAudioToAppStorage(res)
       setRecording(null);
-      setAudioPath(res);
+      setAudioPath(uri);
       setIsEdited(true)
     };
 

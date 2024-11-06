@@ -196,6 +196,7 @@ import { updateTransitionSegment } from '../../../Global/Calls/UpdateTransition'
 import TimeSelectorModal from '../../Modals/TimerPIcker';
 import FullScreenVideoModal from '../../Modals/VIewVideoModal';
 import { deleteTimeSegment } from '../../../Global/Calls/deleteTransition';
+import saveVideoToAppStorage from '../../../Global/Calls/Create_vid_url';
 
 export default function TransitionScreen({ route }) {
   const [showMenu, setShowMenu] = useState(false);
@@ -302,7 +303,9 @@ else{
     });
 console.log(result)
     if (!result.canceled) {
-      setVideo(result.assets[0].uri);
+      const uri_finalized= await saveVideoToAppStorage("idd",result.assets[0].uri)
+
+      setVideo(uri_finalized);
     }
   }
 
@@ -313,10 +316,13 @@ console.log(result)
       allowsEditing: true,
       quality: 1,
     });
+    console.log(result)
     
     if (!result.canceled) {
       console.log(result.canceled)
-      setVideo(result.assets[0].uri);
+      const uri_finalized= await saveVideoToAppStorage("idd",result.assets[0].uri)
+
+      setVideo(uri_finalized);
     }
   }
 
@@ -379,18 +385,22 @@ async function updateDUration (){
         mediaTypes: ImagePicker.MediaTypeOptions.Videos,
         allowsEditing: true,
         quality: 1,
-      });
+      }); 
   console.log(result)
       if (!result.canceled) {
 
         setEdited(true)
 
-        setVideo(result.assets[0].uri);
+
+        const uri_finalized= await saveVideoToAppStorage("idd",result.assets[0].uri)
+
+        setVideo(uri_finalized);
       }
     }
   
     // Function to record a video
     async function recordVideo() {
+      console.log("dsdd")
       let result = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Videos,
         allowsEditing: true,
@@ -400,7 +410,8 @@ async function updateDUration (){
       if (!result.canceled) {
         console.log(result.canceled)
         setEdited(true)
-        setVideo(result.assets[0].uri);
+       const uri_finalized= await saveVideoToAppStorage("idd",result.assets[0].uri)
+        setVideo(uri_finalized);
       }
     }
     // const [data]
