@@ -7,7 +7,7 @@ async function saveAudioToAppStorage(audioUri) {
     const uid = new Date().getTime().toString();
 
     // Set the target path in the app’s document directory with `.mp3` extension
-    const targetPath = `${FileSystem.documentDirectory}${uid}.mp3`;
+    const targetPath = `${FileSystem.documentDirectory}${uid}.m4a`;
 
     // Copy the audio file to the app’s storage
     await FileSystem.copyAsync({

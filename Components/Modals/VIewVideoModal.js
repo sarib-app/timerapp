@@ -18,7 +18,13 @@ const FullScreenVideoModal = ({ videoUrl, isVisible, onClose }) => {
     >
       <View style={styles.container}>
         {/* Video Player */}
+ <View
+      style={styles.video}
  
+ >
+
+
+
 <Video
       ref={ref}
       style={styles.video}
@@ -31,6 +37,7 @@ const FullScreenVideoModal = ({ videoUrl, isVisible, onClose }) => {
       isLooping
  
     />
+ </View>
 
         {/* Close Button */}
         <Button
@@ -57,7 +64,7 @@ backgroundColor:"black"
   },
   video: {
     width: width/1.2,
-    height: height/1.8  // Adjust to take most of the screen
+    height: height/1.5  // Adjust to take most of the screen
   },
 });
 

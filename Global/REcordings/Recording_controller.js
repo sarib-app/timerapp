@@ -45,12 +45,13 @@ export  const startRecordingasync = async () => {
       const result = await DocumentPicker.getDocumentAsync({
         type: 'audio/*',
       });
-      if (result.type === 'success') {
+      console.log(result)
+      if (result.canceled === false) {
         
         // setAudioPath(result.uri);
-        console.log('Audio URI: ', result.uri);
+        console.log('Audio URI: ', result.assets[0].uri);
         Alert.alert('Audio uploaded successfully!');
-        return result.uri
+        return result.assets[0].uri
       } else {
         console.log('Upload canceled');
         return null

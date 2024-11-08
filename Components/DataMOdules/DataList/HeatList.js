@@ -181,9 +181,12 @@ const [isEdited,setIsEdited]=useState(false)
     const uploadAudio = async () => {
       const res = await uploadAudioasync()
       // setAudioPath(res);
+      console.log("up",res)
       if (!res) {
         return
       }
+      console.log("below",res)
+
       const uri = await saveAudioToAppStorage(res)
       setAudioPath(uri);
       setRecording(null);
