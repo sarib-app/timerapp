@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 import fetchHeatData from '../../../Global/Calls/getHeats';
 import UpdateBtn from '../../../Global/components/UpdateBtn';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { uploadAndUpdateLanesFromCSV } from '../../../Global/Calls/uploadCSVlanes';
 
 const RenderItem = React.memo(({ item, onEdit }) => {
     const [athleteName, setAthleteName] = useState(item.athlete_name);
@@ -109,11 +110,17 @@ export default function LaneScreen({ route }) {
             console.error('Error updating lanes data:', error);
         }
     };
+    async function onUploadingFile(){
+       const res  = await  uploadAndUpdateLanesFromCSV(sid)
+       if(res === "200"){
+        getHeatData(sid)
+       }
+    }
 
     return (
         <View style={DataListStyle.container}>
             <View style={DataListStyle.TitleWrapper}>
-                <SmallbtnII OnPress={() => console.log("dsds")} hide={true} />
+                <SmallbtnII OnPress={() => onUploadingFile()}/>
                 <Text style={DataListStyle.MainTitle}>Lanes</Text>
                 <UpdateBtn OnPress={onUpdateLanesData} />
             </View>

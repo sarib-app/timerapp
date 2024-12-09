@@ -97,10 +97,10 @@ const focused = useIsFocused()
 
 
 
-      async function ongetNextHeat(){
+      async function ongetNextHeat(e){
         const data = await getNextHeat(currentIndex)
       if(data){
-        setautoPlay(true)
+        setautoPlay(e)
         setHeatData([])
         setHeatData(data.heat)
         setCUrrentHeatINdex(data.index)
@@ -120,10 +120,10 @@ const focused = useIsFocused()
         Alert.alert("Sorry","No more/Transition heat found!")
       }
       }
-      async function ongetPreviousHeat(){
+      async function ongetPreviousHeat(e){
         const data = await getPreviousHeat(currentIndex)
         if(data){
-          setautoPlay(true)
+          setautoPlay(e)
         setHeatData([])
         setHeatData(data.heat)
         setCUrrentHeatINdex(data.index)
@@ -266,8 +266,8 @@ heatData_lanes={heatData_lanes}
   locked={false}
   onPress={()=> setShowVid(true)}
   heatData={heatData}
-ongetNextHeat={()=>ongetNextHeat()}
-ongetPreviousHeat={()=>ongetPreviousHeat()}
+ongetNextHeat={(e)=>ongetNextHeat(e)}
+ongetPreviousHeat={(e)=>ongetPreviousHeat(e)}
 autoPlay={autoPlay}
   /> 
 :

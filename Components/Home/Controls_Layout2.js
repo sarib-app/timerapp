@@ -683,12 +683,11 @@ console.log(showVid)
       
       {
         finalsegment &&
-        <>
-        {
-          showVid ? 
+      
+          showVid &&
        <Video
         ref={ref}
-        style={HomeStyles.Image_wrapper}
+        style={[HomeStyles.Image_wrapper]}
         source={{
           uri: vidd,
         }}
@@ -707,37 +706,9 @@ console.log(showVid)
 
         }}
       />
-      :
-      <View style={{alignItems:"center"}}>
-
-      <Video
-      ref={ref}
-      style={HomeStyles.Image_wrapper}
-      source={{
-        uri: "",
-      }}
-      useNativeControls
-    shouldPlay={play}
-      resizeMode={ResizeMode.CONTAIN}
-      isLooping
-      // onPlaybackStatusUpdate={status => {
-      //   console.log(status)
-      //  if(status.isPlaying){
-      //   setPlay(true)
-      //  }else{
-      //   setPlay(false)
-      //  }
-
-      // }}
-  
-    />
-                <Text style={[HomeStyles.MainTitle, { fontSize: WindowHeight / 22 }]}>Video will be played at {convertSecondsToTime(finalsegment?.cue_at)}</Text>
-
-      </View>
+      
 }
-        </>
- 
-    }
+      
     
       <View style={HomeStyles.Image_wrapper}>
         <Text style={[HomeStyles.MainTitle, { fontSize: WindowHeight / 12 }]}>NEXT HEAT IN</Text>

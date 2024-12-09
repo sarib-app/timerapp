@@ -102,10 +102,11 @@ flexDirection:'row'
         alignItems:'center'
       },
       Image_wrapper:{
-        width:WindowWidth/2.2,
+        width:WindowWidth/2.5,
         height:WindowHeight/2.1,
         alignItems:'center',
         justifyContent:'center',
+        
         // backgroundColor:"pink"
       }
 
