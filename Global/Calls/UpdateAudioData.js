@@ -36,6 +36,9 @@ async function updateSoundInTimeSegment(heatSeries, segmentIndex, audioIndex, up
         // Save the updated heats data back to AsyncStorage
         await AsyncStorage.setItem('heats', JSON.stringify(heats));
         await AsyncStorage.setItem('changings',"true")
+    await AsyncStorage.setItem('changing_made',"Sound Updated")
+
+    await AsyncStorage.setItem('changed_id',String(heatSeries))
 
         console.log('Sound updated successfully in the time segment.');
 Alert.alert("Success","CUE updated successfully")

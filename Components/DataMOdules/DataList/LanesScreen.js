@@ -99,6 +99,10 @@ export default function LaneScreen({ route }) {
                 heats[existingHeatIndex].lanes = updatedLanes;
                 await AsyncStorage.setItem('heats', JSON.stringify(heats));
         await AsyncStorage.setItem('changings',"true")
+        await AsyncStorage.setItem('changing_made',"Lanes updated")
+        await AsyncStorage.setItem('changed_id',String(heatSeries))
+
+
 
                 Alert.alert('Success','Lanes data updated successfully.');
                 setLanes(updatedLanes);

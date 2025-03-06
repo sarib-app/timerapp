@@ -12,6 +12,9 @@ async function removeHeatById(id) {
     // Step 3: Save the updated array back to AsyncStorage
     await AsyncStorage.setItem('heats', JSON.stringify(updatedHeatsArray));
     await AsyncStorage.setItem('changings',"true")
+    await AsyncStorage.setItem('changing_made',"Heat Removed")
+    await AsyncStorage.setItem('changed_id',String(id))
+alert(id)
     
 
     console.log(`Heat with ID: ${id} removed successfully`);

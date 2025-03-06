@@ -39,15 +39,51 @@ const focused = useIsFocused()
      async function getData(){
 
       const edit= await AsyncStorage.getItem("changings")
+      const edit_what= await AsyncStorage.getItem("changing_made")
+      const edited_id= await AsyncStorage.getItem("changed_id")
+
+
+      
       if(edit && edit === "true"){
 
       const data = await getLaunchedHeat()
+      console.log(data)
       if(data){
-        setHeatData([])
 
-        setautoPlay(false)
+console.log(">>>",data?.heat?.id)
+async function endHeat() {
+  setHeatData([])
+  
+}
+        // if(edit_what == "Heat Launched" || "Heat Removed" || "Sound deleted" || "Heat Segment deleted"){
+        async function changevals(){
+          await endHeat()
+
+          setautoPlay(false)
+          console.log(">>>>>>>>>>>",data.heat)
+          setHeatData(data.heat)
+        }
+        if(edit_what == "Heat Launched"){
+          changevals()
+        }
+else if(data.heat.type === "heat"){
+if(edited_id == data?.heat?.heat_series){
+  changevals()
+
+
+}
+}else{
+  if(edited_id == data?.heat?.transition_series){
+    changevals()
+
+  
+  }
+}
+
+        // }
         
-        setHeatData(data.heat)
+        // setHeatData(data.heat)
+        // console.log("heat >>>> ",data)
         setCUrrentHeatINdex(data.index)
         // console.log(data)
         if(data.heat.type === "transition"){
@@ -60,6 +96,15 @@ const focused = useIsFocused()
           setShowVid(false)
         }
         await AsyncStorage.setItem('changings',"false")
+        await AsyncStorage.setItem('changing_made',"Chanings Removed")
+        await AsyncStorage.setItem('changed_id',"null")
+
+      }
+      else{
+        setHeatData([])
+
+        setautoPlay(false)
+        setHeatData([])
       }
     }
      }
@@ -75,6 +120,8 @@ const focused = useIsFocused()
       if(data){
         setHeatData(data.heat)
         setCUrrentHeatINdex(data.index)
+        console.log("heat >>>> ",data.heat)
+
         // console.log(data)
         if(data.heat.type === "transition"){
         setShowVid(true)
@@ -86,6 +133,9 @@ const focused = useIsFocused()
         setShowVid(false)
         }
         await AsyncStorage.setItem('changings',"false")
+        await AsyncStorage.setItem('changing_made',"Chanings Removed")
+        await AsyncStorage.setItem('changed_id',"null")
+
       }
     
 

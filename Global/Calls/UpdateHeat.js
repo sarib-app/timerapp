@@ -35,6 +35,10 @@ async function updateSegmentInHeatByIndex(heatSeries, segmentIndex, updatedSegme
         heats[heatIndex] = heat;
         await AsyncStorage.setItem('heats', JSON.stringify(heats));
         await AsyncStorage.setItem('changings',"true")
+    await AsyncStorage.setItem('changing_made',"Heat Segment Updated")
+
+    await AsyncStorage.setItem('changed_id',String(heatSeries))
+
 
         console.log(`Segment at index ${segmentIndex} in heat series ${heatSeries} updated successfully.`);
         return heat;

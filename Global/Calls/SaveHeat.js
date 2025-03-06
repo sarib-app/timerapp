@@ -42,6 +42,9 @@ async function saveHeatData(heatSeries, timeSegment) {
 
         await AsyncStorage.setItem('heats', JSON.stringify(heats));
         await AsyncStorage.setItem('changings',"true")
+    await AsyncStorage.setItem('changing_made',"Heat Data Saved")
+
+    await AsyncStorage.setItem('changed_id',String(heatSeries))
 
         console.log('Heat data saved successfully.');
 

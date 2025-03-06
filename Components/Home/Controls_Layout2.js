@@ -620,7 +620,7 @@ export default function Controls_layout2({ locked, onPress, heatData, ongetNextH
   async function handleCHanigngs(){
     if (timer !== undefined) {
       if (timer <= 0 ) {
-        handleNextSegment();
+        handleNextSegment(true);
       }
       else{
      const vid = heatData?.time_segments?.filter((item)=> item.cue_at == timer)   
@@ -649,12 +649,12 @@ export default function Controls_layout2({ locked, onPress, heatData, ongetNextH
     }
   };
 
-  function handleNextSegment() {
+  function handleNextSegment(val) {
     clearInterval(intervalRef.current);
     setPlay(false);
   
       console.log("call next heat from 2 ");
-      ongetNextHeat();
+      ongetNextHeat(val);
     setSHowVid(false)
 
     
@@ -711,27 +711,27 @@ console.log(showVid)
       
     
       <View style={HomeStyles.Image_wrapper}>
-        <Text style={[HomeStyles.MainTitle, { fontSize: WindowHeight / 12 }]}>NEXT HEAT IN</Text>
-        <Text style={HomeStyles.Time_small}>{convertSecondsToTime(timer)}</Text>
+        <Text style={[HomeStyles.MainTitle, { fontSize: WindowHeight / 13 }]}>NEXT HEAT IN</Text>
+        <Text style={[HomeStyles.Time_small,{fontSize: WindowHeight / 6}]}>{convertSecondsToTime(timer)}</Text>
         <View style={HomeStyles.TimeWrapper}>
           <Ionicons 
-          onPress={()=> ongetPreviousHeat()}
+          onPress={()=> ongetPreviousHeat(false)}
           
-          name="play-back-outline" size={WindowHeight / 9} color={Colors.FontColorI} />
+          name="play-back-outline" size={WindowHeight / 10} color={Colors.FontColorI} />
           {
             play ?
 
           <TouchableOpacity onPress={() => setPlay(false)}>
-            <AntDesign name="pausecircleo" size={WindowHeight / 12} color={Colors.FontColorI} />
+            <AntDesign name="pausecircleo" size={WindowHeight / 13} color={Colors.FontColorI} />
           </TouchableOpacity>
           :
           <TouchableOpacity onPress={() => setPlay(true)}>
-            <EvilIcons name="play" size={WindowHeight / 9} color={Colors.FontColorI} />
+            <EvilIcons name="play" size={WindowHeight / 10} color={Colors.FontColorI} />
           </TouchableOpacity>
           }
 
           <Ionicons 
-          onPress={()=> ongetNextHeat()}
+          onPress={()=> ongetNextHeat(false)}
           name="play-forward-outline" size={WindowHeight / 9} color={Colors.FontColorI} />
         </View>
       </View>

@@ -26,6 +26,9 @@ export async function deleteTimeSegment(transitionSeries, timeSegmentIndex) {
                 // Save the updated transitions back to AsyncStorage
                 await AsyncStorage.setItem('heats', JSON.stringify(transitions));
                 await AsyncStorage.setItem('changings', "true");
+    await AsyncStorage.setItem('changing_made',"Transition Segment deleted")
+    await AsyncStorage.setItem('changed_id',String(transitionSeries))
+
 
                 Alert.alert("Success", 'Time segment deleted successfully');
             } else {

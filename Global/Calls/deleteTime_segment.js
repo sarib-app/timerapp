@@ -29,6 +29,10 @@ export async function delete_time_segment_index(heatSeries, timeSegmentIndex) {
         // Save the updated heats back to AsyncStorage
         await AsyncStorage.setItem('heats', JSON.stringify(heats));
         await AsyncStorage.setItem('changings', "true");
+    await AsyncStorage.setItem('changing_made',"Heat Segment deleted")
+    await AsyncStorage.setItem('changed_id',String(heatSeries))
+
+
 
         Alert.alert("Success",'Time segment deleted successfully.');
     } catch (error) {

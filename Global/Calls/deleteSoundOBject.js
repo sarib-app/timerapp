@@ -33,6 +33,9 @@ export async function deleteSoundFromTimeSegment(heatSeries, timeSegmentIndex, s
         // Save the updated heats back to AsyncStorage
         await AsyncStorage.setItem('heats', JSON.stringify(heats));
         await AsyncStorage.setItem('changings', "true");
+    await AsyncStorage.setItem('changing_made',"Sound deleted")
+    await AsyncStorage.setItem('changed_id',String(heatSeries))
+
         Alert.alert("Success",'Sound deleted successfully from time segment.');
 
         console.log('Sound deleted successfully from time segment.');
