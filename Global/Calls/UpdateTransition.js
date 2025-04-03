@@ -31,6 +31,7 @@ export async function updateTransitionSegment(transitionSeries, segmentIndex, up
         transitions[transitionIndex] = transition; // Update the transition in the array
         await AsyncStorage.setItem('heats', JSON.stringify(transitions));
         await AsyncStorage.setItem('changings',"true")
+        await AsyncStorage.setItem('chaning_type',"transition")
         await AsyncStorage.setItem('changing_made',"Transition Updated")
         await AsyncStorage.setItem('changed_id',String(transitionSeries))
 

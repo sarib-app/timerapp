@@ -41,8 +41,9 @@ const focused = useIsFocused()
       const edit= await AsyncStorage.getItem("changings")
       const edit_what= await AsyncStorage.getItem("changing_made")
       const edited_id= await AsyncStorage.getItem("changed_id")
+      const chaning_type= await AsyncStorage.getItem("chaning_type")
 
-
+console.log(chaning_type, "<<<<<<<<<< changing type")
       
       if(edit && edit === "true"){
 
@@ -67,17 +68,25 @@ async function endHeat() {
           changevals()
         }
 else if(data.heat.type === "heat"){
-if(edited_id == data?.heat?.heat_series){
-  changevals()
-
-
-}
-}else{
-  if(edited_id == data?.heat?.transition_series){
-    changevals()
-
-  
+  if(chaning_type === "heat"){
+    if(edited_id == data?.heat?.heat_series){
+      changevals()
+      console.log("fun 1 , edited id",edited_id,"heat series",data?.heat?.heat_series)
+    
+    
+    }
   }
+
+}else{
+  if(chaning_type === "transition"){
+    if(edited_id == data?.heat?.transition_series){
+      changevals()
+      console.log("fun 2 , edited id",edit_what,"trans series",data?.heat?.heat_series)
+  
+    
+    }
+  }
+
 }
 
         // }

@@ -35,6 +35,8 @@ async function launchHeat(heatId) {
         await AsyncStorage.setItem('heats', JSON.stringify(heats));
         console.log('Heat launched successfully.');
         await AsyncStorage.setItem('changings',"true")
+        await AsyncStorage.setItem('chaning_type',"heat")
+
         await AsyncStorage.setItem('changing_made',"Heat Launched")
         await AsyncStorage.setItem('changed_id',String(heatId))
 

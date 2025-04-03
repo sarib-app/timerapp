@@ -44,6 +44,8 @@ export async function addOrUpdateTransition(transitionSeries , timeSegmentData) 
         // Save the updated transitions back to AsyncStorage
         await AsyncStorage.setItem('heats', JSON.stringify(transitions));
         await AsyncStorage.setItem('changings',"true")
+        await AsyncStorage.setItem('chaning_type',"transition")
+
         await AsyncStorage.setItem('changing_made',"Transition added")
         await AsyncStorage.setItem('changed_id',String(transitionSeries))
 
@@ -75,6 +77,7 @@ export async function updateTotalDuration(transitionSeries, newTotalDuration) {
             // Save the updated transitions back to AsyncStorage
             await AsyncStorage.setItem('heats', JSON.stringify(transitions));
             await AsyncStorage.setItem('changings', "true");
+            await AsyncStorage.setItem('chaning_type',"transition")
         await AsyncStorage.setItem('changing_made',"Transition Duration Updated")
         await AsyncStorage.setItem('changed_id',String(transitionSeries))
 

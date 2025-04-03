@@ -37,6 +37,7 @@ async function updateSoundInTimeSegment(heatSeries, segmentIndex, audioIndex, up
         await AsyncStorage.setItem('heats', JSON.stringify(heats));
         await AsyncStorage.setItem('changings',"true")
     await AsyncStorage.setItem('changing_made',"Sound Updated")
+    await AsyncStorage.setItem('chaning_type',"heat")
 
     await AsyncStorage.setItem('changed_id',String(heatSeries))
 
